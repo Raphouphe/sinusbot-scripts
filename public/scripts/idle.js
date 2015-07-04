@@ -52,9 +52,12 @@ registerPlugin({
             placeholder: '2'
         },
         ignoreIfOutputIsntMuted: {
-            title: '0 = Client is moved even if the speakers aren\'t disabled, 1 = Client isn\'t moved if the speakers aren\'t disabled.',
-            type: 'number',
-            placeholder: '1'
+            title: 'If the clients which speakers aren\'t disabled, has to be ignored by the idle mover',
+            type: 'select',
+            options: [
+                'Ignore Client',
+                'Don\'t Ignore Client'
+            ]
         }
     }
 }, function(sinusbot, config) {
@@ -64,7 +67,7 @@ registerPlugin({
     var idleChannel = 0;
     var exemptChannels = [];
     
-    var whitelist = [];
+    var whitelist = {};
     
     if (config.idleTime < 150) {
         log('[Idle Mover] Idle time must be at least 150 seconds.');
@@ -74,11 +77,13 @@ registerPlugin({
         log('[Idle Mover] The bot won\'t check more than 30 times a minute, if the clients are idling...');
         return;
     }
-    if (config.ignoreIfOutputIsntMuted > 1 || config.ignoreIfOutputIsntMuted < 0){
-        config.ignoreIfOutputIsntMuted = 1;
-    } 
 
     sinusbot.on('timer', function() {
+        for(var id in whitelist){
+            if(whitelist.get(id) + 120*1000 < Date.now()){
+                whitelist.delete(id);
+            }
+        }
         counter++;
         if ((counter % (60/config.checksPerMinute)) == 0) {
             log('[Idle Mover] Idle check');
@@ -94,13 +99,12 @@ registerPlugin({
                 for (var j = 0; j < channel.clients.length; j++) {
                     client = channel.clients[j];
                     if (client.id == self) continue;
-                    if (isWhitelisted(client.id)) continue;
-                    if (config.ignoreIfOutputIsntMuted == 1) {
+                    if (whitelist[client.id]) continue;
+                    if (config.ignoreIfOutputIsntMuted == 0) {
                         if (!client.outputMuted) continue;
                     }
                     if (client.idle > config.idleTime * 1000 || (client.away && client.idle > config.idleTime * 500)) {
                         log('Client ' + client.nick + ' is idling, moving');
-                        whitelistClient(client.id);
                         chatPrivate(client.id, config.idleMessage);
                         move(client.id, idleChannel);
                     }
@@ -109,23 +113,11 @@ registerPlugin({
         }
     });
 	
-    var whitelistClient = function(id){
-        var cl = {id: id, counter: counter};
-        whitelist.push(cl);
-    }
-        
-    var isWhitelisted = function(id) {
-        whitelist.forEach(function(element, index, array){
-            if(element.id == id){
-                if(element.counter + 120 > counter){
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-        return false;
-    }
+    sinusbot.on('move', function(){
+        if(ev.oldChannel.id == idleChannel){
+            whitelist.set(ev.clientId, Date.now());
+        }
+    });
         
     var updateChannels = function() {
         log('[Idle Mover] Connected, getting channels');
