@@ -77,7 +77,7 @@ registerPlugin({
     if (!config.checksPerMinute) {log('[Idle Mover] Invalid amount of checks per minute'); return;}
     if (!config.ignoreIfOutputIsntMuted) {log('[Idle Mover] Not selected: ignoring client if speakers aren\'t disabled'); return;}
     
-    var exemptNames = config.exemptChannel.split(',').map(function(e) { return e.trim() });
+    var exemptNames = config.exemptChannel.split(',').map(function(e) { return e.trim(); });
     
     var counter = 0;
     var idleChannel = 0;
