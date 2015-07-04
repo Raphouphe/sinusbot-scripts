@@ -34,6 +34,11 @@ registerPlugin({
         }
     }
 }, function(sinusbot, config) {
+    if (!config.names){
+        log('[BCN] Invalid channel names');
+        return;
+    }
+    
     var names = config.names.split(',').map(function(e) { return e.trim() });
     sinusbot.on('channelCreate', function(ev) {
         if (!ev.name) return; // should not happen
