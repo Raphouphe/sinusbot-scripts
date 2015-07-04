@@ -69,6 +69,14 @@ registerPlugin({
         }
     }
 }, function(sinusbot, config) {
+    if (!config.idleTime) {log('[Idle Mover] Invalid idle time'); return;}
+    if (!config.idleChannel) {log('[Idle Mover] Invalid idle channel name'); return;}
+    if (!config.exemptChannel) {log('[Idle Mover] Invalid names of exempted channels'); return;}
+    if (!config.sendIdleMessage) {log('[Idle Mover] Not selected: send idle message'); return;}
+    if (!config.idleMessage) {log('[Idle Mover] Invalid idle message'); return;}
+    if (!config.checksPerMinute) {log('[Idle Mover] Invalid amount of checks per minute'); return;}
+    if (!config.ignoreIfOutputIsntMuted) {log('[Idle Mover] Not selected: ignoring client if speakers aren\'t disabled'); return;}
+    
     var exemptNames = config.exemptChannel.split(',').map(function(e) { return e.trim() });
     
     var counter = 0;
@@ -82,7 +90,7 @@ registerPlugin({
         return;
     } 
     if (config.checksPerMinute > 30) {
-        log('[Idle Mover] The bot won\'t check more than 30 times a minute, if the clients are idling...');
+        log('[Idle Mover] The bot won\'t check if the clients are idling more than 30 times a minute...');
         return;
     }
 
