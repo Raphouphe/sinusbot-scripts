@@ -41,6 +41,14 @@ registerPlugin({
             title: 'Comma-separated list of ignored channels',
             type: 'string'
         },
+        sendIdleMessage: {
+            title: 'If the bot has to sent the idle message to each client which is moved',
+            type: 'select',
+            options: [
+                'Send',
+                'Don\'t Send'
+            ]
+        },
         idleMessage: {
             title: 'Message sent privatly to each client which is moved after idling to long',
             type: 'string',
@@ -79,12 +87,14 @@ registerPlugin({
     }
 
     sinusbot.on('timer', function() {
-        for(var id in whitelist){
-            if(whitelist.get(id) + 120*1000 < Date.now()){
-                whitelist.delete(id);
+        counter++;
+        if ((counter % 20) == 0){
+            for(var id in whitelist){
+                if(whitelist[id] + 120*1000 < Date.now()){
+                    delete whitelist[id];
+                }
             }
         }
-        counter++;
         if ((counter % (60/config.checksPerMinute)) == 0) {
             log('[Idle Mover] Idle check');
             // Idle-check once in 60 seconds
@@ -114,8 +124,8 @@ registerPlugin({
     });
 	
     sinusbot.on('move', function(){
-        if(ev.oldChannel.id == idleChannel){
-            whitelist.set(ev.clientId, Date.now());
+        if(ev.oldChannel == idleChannel){
+            whitelist[ev.clientId] = Date.now();
         }
     });
         
