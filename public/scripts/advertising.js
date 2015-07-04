@@ -56,15 +56,21 @@ registerPlugin({
         }
     }
 }, function(sinusbot, config) {
-    log(JSON.stringify(config));
+    if(!config.ads) return;
+    if(!config.interval || config.interval < 5) return;
+    if(!config.order) return;
+    if(!config.type) return;
+    
     var ads = config.ads.split('\n').map(function(e) { 
         return e.trim().replace(/\r/g, '')
-                .replace(/((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)/gi,''); 
+                .replace(/((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)/gi,'[url=$1]$1[/url]'); 
     });
-    var ctr = -1;
-    sinusbot.on('timer', function(ev) {
+    if(ads.length == 0) return;
+    
+    var ctr = 0;
+    
+    sinusbot.on('timer', function() {
         ctr++;
-        if (ads.length == 0 || config.interval < 5) return;
         if (ctr % config.interval != 0) return;
         var ad = ctr % ads.length;
         if (config.order == 1 && ads.length > 1) {
