@@ -131,7 +131,7 @@ registerPlugin({
         }
     });
 	
-    sinusbot.on('move', function(){
+    sinusbot.on('move', function(ev){
         if(ev.oldChannel == idleChannel){
             whitelist[ev.clientId] = Date.now();
         }
