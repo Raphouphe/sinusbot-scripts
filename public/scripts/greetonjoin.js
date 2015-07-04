@@ -59,7 +59,12 @@ registerPlugin({
     sinusbot.on('clientJoin', function(ev){
        var msg = config.message;
        msg = msg.replace(/%n/g, ev.clientNick);
-       msg = msg.replace(/((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)/gi, '[url=$1]$1[/url]');
+       if(config.type != 3){
+           msg = msg.replace(/((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)/gi, '[url=$1]$1[/url]');
+       } else {
+           msg = msg.replace(/\[.\](.{0,})\[\/.\]/i, '$1');
+           msg = msg.replace(/<.>(.{0,})<\/.>/i, '$1');
+       }
        
        if(config.type == 0){
            chatPrivate(ev.clientId, msg);
