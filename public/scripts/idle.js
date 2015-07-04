@@ -50,7 +50,7 @@ registerPlugin({
             ]
         },
         idleMessage: {
-            title: 'Message sent privatly to each client which is moved after idling to long',
+            title: 'Message sent privatly to each client which is moved after idling to. (supports BBCodes)',
             type: 'string',
             placeholder: 'You have been moved.'
         },
