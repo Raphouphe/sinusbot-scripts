@@ -21,34 +21,22 @@
  * @author Raphael Touet <raphi@bypit.de>
  * 
  */
-
 registerPlugin({
-    name: 'Bad Channel Names',
+    name: 'No Recording!',
     version: '1.1',
-    description: 'This script will remove all channels matching some userdefined names.',
+    description: 'This script will kick anyone who attempts to record.',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
-        names: {
-            title: 'Comma-separated list of forbidden names',
-            type: 'string'
+        kickMessage: {
+            title: 'Used kick message',
+            type: 'string',
+            placeholder: 'No recording on our server!'
         }
     }
 }, function(sinusbot, config) {
-    if (!config.names){
-        log('[BCN] Invalid channel names');
-        return;
-    }
-    
-    var names = config.names.split(',').map(function(e) { return e.trim() });
-    sinusbot.on('channelCreate', function(ev) {
-        if (!ev.name) return; // should not happen
-        for (var i = 0; i < names.length; i++) {
-            if (ev.name.toLowerCase().indexOf(names[i].toLowerCase()) >= 0) {
-                log('Deleting channel ' + ev.name);
-                channelDelete(ev.id, true);
-                return;
-            }
-        }
+    if(config.kickMessage) {log('[No Rec.] Invalid kick message');return;}
+    sinusbot.on('record', function(ev) {
+        kickServer(ev.clientId, config.kickMessage);
     });
 });
 
