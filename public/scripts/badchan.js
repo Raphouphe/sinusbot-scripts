@@ -29,7 +29,7 @@ registerPlugin({
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
         names: {
-            title: 'Comma-separated list of forbidden names or regex',
+            title: 'List of forbidden names or regex (one per line)',
             type: 'multiline'
         },
         ignoredChannels: {
