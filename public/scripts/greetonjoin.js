@@ -77,4 +77,6 @@ registerPlugin({
        }
        
     });
+    
+    log('[J-Greet] Initialized. Now works.');
 });
