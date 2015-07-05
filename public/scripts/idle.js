@@ -118,13 +118,20 @@ registerPlugin({
                     client = channel.clients[j];
                     if (client.id == self) continue;
                     if (whitelist[client.id]) continue;
-                    if (config.ignoreIfOutputIsntMuted == 0) {
-                        if (!client.outputMuted) continue;
-                    }
-                    if (client.idle > config.idleTime * 1000 || (client.away && client.idle > config.idleTime * 500)) {
+                    if (client.away && client.idle > config.idleTime * 500){
                         log('Client ' + client.nick + ' is idling, moving');
                         chatPrivate(client.id, config.idleMessage);
                         move(client.id, idleChannel);
+                        continue;
+                    }
+                    if (config.ignoreIfOutputIsntMuted == 0) {
+                        if (!client.outputMuted) continue;
+                    }
+                    if (client.idle > config.idleTime * 1000) {
+                        log('Client ' + client.nick + ' is idling, moving');
+                        chatPrivate(client.id, config.idleMessage);
+                        move(client.id, idleChannel);
+                        continue;
                     }
                 }
             }
