@@ -63,7 +63,7 @@ registerPlugin({
     
     var ads = config.ads.split('\n').map(function(e) { 
         return e.trim().replace(/\r/g, '')
-                .replace(/((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)/gi,'[url=$1]$1[/url]'); 
+                .replace(/(?:[url=.{1,}])?((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)(?:[/url])/gi,'[url=$1]$1[/url]'); 
     });
     if(ads.length == 0) return;
     

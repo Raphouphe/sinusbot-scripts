@@ -94,6 +94,8 @@ registerPlugin({
         return;
     }
 
+    var msg = config.idleMessage.replace(/(?:[url=.{1,}])?((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)(?:[/url])/gi,'[url=$1]$1[/url]');
+
     sinusbot.on('timer', function() {
         counter++;
         if ((counter % 20) == 0){
@@ -120,7 +122,7 @@ registerPlugin({
                     if (whitelist[client.id]) continue;
                     if (client.away && client.idle > config.idleTime * 500){
                         log('Client ' + client.nick + ' is idling, moving');
-                        chatPrivate(client.id, config.idleMessage);
+                        chatPrivate(client.id, msg);
                         move(client.id, idleChannel);
                         continue;
                     }
@@ -129,7 +131,7 @@ registerPlugin({
                     }
                     if (client.idle > config.idleTime * 1000) {
                         log('Client ' + client.nick + ' is idling, moving');
-                        chatPrivate(client.id, config.idleMessage);
+                        chatPrivate(client.id, msg);
                         move(client.id, idleChannel);
                         continue;
                     }

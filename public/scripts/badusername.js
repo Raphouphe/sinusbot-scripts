@@ -73,7 +73,8 @@ registerPlugin({
     
     if(!config.messages) {log('[Bad Usernames] No messages defined');return;}
     var messages = {};
-    var m = config.expressions.split('\n').map(function(e) { return e.trim().replace(/\r/g, ''); });
+    var m = config.expressions.split('\n').map(function(e) { return e.trim().replace(/\r/g, '')
+            .replace(/(?:[url=.{1,}])?((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)(?:[/url])/gi,'[url=$1]$1[/url]'); });
     messages['warn'] = m[0];
     messages['kick'] = m[1];
     
