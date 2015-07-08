@@ -56,7 +56,7 @@ registerPlugin({
         if (!ev.name) return; // should not happen
         if (ignoredChannels.indexOf(ev.id) >= 0) return;
         for (var i = 0; i < names.length; i++) {
-            if (names[i].match(/^\/.*\/$/)){
+            if (names[i].match(/^\/.*\/.*$/)){
                 var reg = new RegExp(names[i]);
                 if(ev.name.match(reg)){
                     log('Deleting channel ' + ev.name);
@@ -81,7 +81,7 @@ registerPlugin({
             channel = channels[j];
             if (ignoredChannels.indexOf(channel.id) >= 0) continue;
             for (var i = 0; i < names.length; i++) {
-                if (names[i].match(/^\/.*\/$/)){
+                if (names[i].match(/^\/.*\/.*$/)){
                     var reg = new RegExp(names[i]);
                     if(channel.name.match(reg)){
                         removed.push(channel.name);
