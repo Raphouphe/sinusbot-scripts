@@ -23,7 +23,7 @@
  */
 registerPlugin({
     name: 'No Recording!',
-    version: '1.1',
+    version: '1.2 BETA',
     description: 'This script will kick anyone who attempts to record.',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
@@ -33,7 +33,7 @@ registerPlugin({
             placeholder: 'No recording on our server!'
         },
         exemptChannels: {
-            title: 'Name-list of the channels which are exempted. (one per line)',
+            title: 'Channel-names. (one per line)',
             type: 'multiline'
         },
         whitelistOrBlacklist: {
@@ -50,6 +50,9 @@ registerPlugin({
     if(!config.whitelistOrBlacklist) {config.whitelistOrBlacklist = 0}
     if(!config.exemptChannels) {config.exemptChannels = ""}
     
+    var whitelistOrBlacklist = config.whitelistOrBlacklist;
+    if(typeof whitelistOrBlacklist != 'number') whitelistOrBlacklist = parseInt(whitelistOrBlacklist);
+    
     var exemptedChannelNames = config.exemptChannels.split('\n').map(function(e) { 
         return e.trim().replace(/\r/g, '');
     });
@@ -61,7 +64,7 @@ registerPlugin({
         for (var i = 0; i < channels.length; i++) {
             channel = channels[i];
             if (exemptChannels.indexOf(channel.id) >= 0) {
-                if (config.whitelistOrBlacklist == 1){
+                if (whitelistOrBlacklist == 0){
                     return;
                 }
             }
