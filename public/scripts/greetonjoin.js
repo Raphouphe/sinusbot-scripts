@@ -57,7 +57,7 @@ registerPlugin({
     
     if(type == 3){
         if(!config.locale) {log('[J-Greet] Invalid locale');return;}
-        if(!config.locale.match(/utf-8|^[a-z]{2}(?:-[a-z]{2})?$/i)) {log('[J-Greet] Invalid locale');return;}
+        if(!config.locale.match(/^utf-8$|^[a-z]{2}(?:-[a-z]{2})?$/i)) {log('[J-Greet] Invalid locale');return;}
     }
     
     
