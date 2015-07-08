@@ -23,7 +23,7 @@
  */
 registerPlugin({
     name: 'Advertising (Text)',
-    version: '1.0',
+    version: '1.2',
     description: 'This script will announce one of the configured lines every x seconds.',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
@@ -56,16 +56,21 @@ registerPlugin({
         }
     }
 }, function(sinusbot, config) {
-    if(!config.ads) return;
-    if(!config.interval || config.interval < 5) return;
-    if(!config.order) return;
-    if(!config.type) return;
+    if(!config.ads) {log('[Advertising] Ads not defined.');return;}
+    if(!config.interval || config.interval < 5) {log('[Advertising] Invalid interval.');return;}
+    if(!config.order) {log('[Advertising] Order not selected.');return;}
+    if(!config.type) {log('[Advertising] Type not selected.');return;}
     
     var ads = config.ads.split('\n').map(function(e) { 
         return e.trim().replace(/\r/g, '')
                 .replace(/(?:[url=.{1,}])?((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)(?:[/url])/gi,'[url=$1]$1[/url]'); 
     });
-    if(ads.length == 0) return;
+    if(ads.length == 0) {log('[Advertising] No ads defined.');return;}
+    
+    var order = config.order;
+    if(typeof order != 'number') order = parseInt(order);
+    var type = config.type;
+    if(typeof type != 'number') type = parseInt(type);
     
     var ctr = 0;
     
@@ -73,12 +78,12 @@ registerPlugin({
         ctr++;
         if (ctr % config.interval != 0) return;
         var ad = ctr % ads.length;
-        if (config.order == 1 && ads.length > 1) {
+        if (order == 1 && ads.length > 1) {
             ad = getRand(ads.length - 1);
         }
-        if (config.type == 0) {
+        if (type == 0) {
             chatChannel(ads[ad]);
-        } else if(config.type == 1) {
+        } else if(type == 1) {
             chatServer(ads[ad]);
         } else {
             var channel, client;
@@ -92,4 +97,6 @@ registerPlugin({
             }
         }
     });
+    
+    sinusbot.on('connect', function(){log('[Advertising] Initiated script.');});
 });
