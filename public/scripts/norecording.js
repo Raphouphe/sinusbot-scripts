@@ -33,7 +33,7 @@ registerPlugin({
             placeholder: 'No recording on our server!'
         },
         exemptChannels: {
-            title: 'Channel-names. (one per line)',
+            title: 'Channel-names or ids (one per line)',
             type: 'multiline'
         },
         whitelistOrBlacklist: {
@@ -54,7 +54,11 @@ registerPlugin({
     if(typeof whitelistOrBlacklist != 'number') whitelistOrBlacklist = parseInt(whitelistOrBlacklist);
     
     var exemptedChannelNames = config.exemptChannels.split('\n').map(function(e) { 
-        return e.trim().replace(/\r/g, '');
+        var ex = e.trim().replace(/\r/g, '');
+        if(parseInt(ex, 10)) {
+            return parseInt(ex, 10);
+        }
+        return ex;
     });
     var exemptChannels = [];
     
@@ -75,11 +79,16 @@ registerPlugin({
     
     var updateChannels = function() {
         log('[No Rec.] Connected, getting channels');
-        var channels = getChannels();
+        var channels = getChannels(), ex;
         var channel_names = channels.map(function(e) { return e.name });
         for(var i = 0; i < exemptedChannelNames.length; i++){
-            if(channel_names.indexOf(exemptedChannelNames[i]) >= 0){
-                var id = channels[channel_names.indexOf(exemptedChannelNames[i])].id;
+            ex = exemptedChannelNames[i];
+            if(typeof ex == 'number'){
+                exemptChannels.push(ex);
+                continue;
+            }
+            if(channel_names.indexOf(ex) >= 0){
+                var id = channels[channel_names.indexOf(ex)].id;
                 if(exemptChannels.indexOf(id) == -1){
                     exemptChannels.push(id);
                 }
@@ -90,5 +99,6 @@ registerPlugin({
     
     updateChannels();
     sinusbot.on('connect', updateChannels);
+    log('[No Rec.] Initialized script.');
 });
 
