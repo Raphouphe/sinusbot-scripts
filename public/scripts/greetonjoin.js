@@ -22,7 +22,7 @@
  */
 registerPlugin({
     name: 'Join-Greeting',
-    version: '1.0 BETA',
+    version: '2.0',
     description: 'This plugin will let the bot greet everyone who joins the channel.',
     author: 'Raphael Touet <raphi@bypit.de>',
     vars: {
@@ -48,8 +48,6 @@ registerPlugin({
         }
     }
 }, function(sinusbot, config){
-    log('[J-Greet] Join-Greeting v1.0 BETA by Raphael Touet');
-    
     if(!config.message) {log('[J-Greet] Invalid message');return;}
     if(!config.type) {log('[J-Greet] Invalid type');return;}
     
@@ -87,5 +85,5 @@ registerPlugin({
        
     });
     
-    log('[J-Greet] Initialized.');
+    log('[J-Greet] Initialized script.');
 });
