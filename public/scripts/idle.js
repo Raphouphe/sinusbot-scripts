@@ -24,7 +24,7 @@
 
 registerPlugin({
     name: 'Idle Mover',
-    version: '2.7',
+    version: '3.0',
     description: 'The bot will move all clients that are idling longer than the given time (in seconds) to a separate channel',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
@@ -176,7 +176,7 @@ registerPlugin({
     updateChannels();
     sinusbot.on('connect', updateChannels);
 
-    log('[Idle Mover] Idle Mover initialized...');
+    log('[Idle Mover] Initialized script.');
 });
 
 
