@@ -70,6 +70,8 @@ registerPlugin({
     });
     
     if(!config.type) {log('[Bad Usernames] No type defined');return;}
+    var type = config.type;
+    if(typeof type != 'number') type = parseInt(type);
     
     if(!config.messages) {log('[Bad Usernames] No messages defined');return;}
     var messages = {};
@@ -78,7 +80,7 @@ registerPlugin({
     messages['warn'] = m[0];
     messages['kick'] = m[1];
     
-    if(config.type == 2){
+    if(type == 2){
         if(!config.kickDelay || config.kickDelay < 30) {log('[Bad Usernames] Invalid kick-delay. Using 30 seconds.');config.kickDelay=30;}
     }
     
@@ -86,7 +88,7 @@ registerPlugin({
     
     var logFunc = function(what, params){
         if(what == 'badUsername'){
-            log('[Bad Usernames] ' + ((config.type == 0 || config.type == 2) ? "Warning" : "Kicking" ) + ' \'' + params['client'] + '\' with id \'' + 
+            log('[Bad Usernames] ' + ((type == 0 || type == 2) ? "Warning" : "Kicking" ) + ' \'' + params['client'] + '\' with id \'' + 
                     params['id'] + '\' and uuid \'' + params['uuid'] +'\' (matches: ' + params['match'] +')');
         }
     }
@@ -96,7 +98,7 @@ registerPlugin({
         var expression, reg;
         for(var i = 0; i < expressions.length; i++){
             expression = expressions[i];
-            if(expression.match(/^\/.*\/$/)){
+            if(expression.match(/^\/.*\/.*$/)){
                 reg = new RegExp(expression);
                 if(name.match(reg)){
                     logFunc('badUsername', {id: id, uuid: uuid, client: name, match: expression});
@@ -114,11 +116,11 @@ registerPlugin({
     
     var checkClient = function (id, uuid, nick){
         if (!checkName(id, uuid, nick)) return;
-        if (config.type == 0){
+        if (type == 0){
             var msg = messages.warn;
             msg = msg.replace(/%n/ig, nick);
             chatPrivate(id, msg);
-        } else if(config.type == 1){
+        } else if(type == 1){
             var msg = messages.kick;
             msg = msg.replace(/%n/ig, nick);
             kickServer(id, msg);
@@ -156,7 +158,7 @@ registerPlugin({
         checkClient(ev.clientId, ev.clientUid, ev.clientNick);
     });
     
-    if(config.type == 2){
+    if(type == 2){
         var ctr = -1, time;
         sinusbot.on('timer', function (ev){
             ctr++;
