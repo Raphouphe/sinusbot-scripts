@@ -53,7 +53,10 @@ registerPlugin({
     if(!config.message) {log('[J-Greet] Invalid message');return;}
     if(!config.type) {log('[J-Greet] Invalid type');return;}
     
-    var type = parseInt(config.type, 10);
+    var type = config.type;
+    if(typeof type != 'number'){
+        type = parseInt(config.type, 10);
+    }
     
     if(type == 3){
         if(!config.locale) {log('[J-Greet] Invalid locale');return;}
