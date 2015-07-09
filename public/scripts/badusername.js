@@ -23,7 +23,7 @@
 
 registerPlugin({
     name: 'Bad Usernames',
-    version: '0.1 ALPHA',
+    version: '1.0',
     description: 'This script will warn / kick / warn and kick all users matching some userdefined names or regex expressions.',
     author: 'Raphael Touet <raphi@bypit.de>',
     vars: {
