@@ -49,9 +49,9 @@ registerPlugin({
             type: 'multiline'
         },
         kickDelay: {
-            title: 'The delay (in seconds) before the name of the client is checked again, and if it\'s a bad name the client get kicked. (cannot be lower than 30)',
+            title: 'The delay (in seconds) before the name of the client is checked again, and if it\'s a bad name the client get kicked. (cannot be lower than 30) (can differ up to 5 seconds)',
             type: 'number',
-            placeholder: '30'
+            placeholder: '10'
         }
     }
 }, function(sinusbot, config) {
@@ -75,13 +75,15 @@ registerPlugin({
     
     if(!config.messages) {log('[Bad Usernames] No messages defined');return;}
     var messages = {};
-    var m = config.expressions.split('\n').map(function(e) { return e.trim().replace(/\r/g, '')
+    var m = config.messages.split('\n').map(function(e) { return e.trim().replace(/\r/g, '')
             .replace(/(?:[url=.{1,}])?((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)(?:[/url])/gi,'[url=$1]$1[/url]'); });
+    if(m.length < 2) {log('[Bad Usernames] You have to define 2 messages');return;}
     messages['warn'] = m[0];
     messages['kick'] = m[1];
     
     if(type == 2){
-        if(!config.kickDelay || config.kickDelay < 30) {log('[Bad Usernames] Invalid kick-delay. Using 30 seconds.');config.kickDelay=30;}
+        var kickDelay = config.kickDelay;
+        if(!kickDelay || kickDelay < 10) {log('[Bad Usernames] Invalid kick-delay. Using 10 seconds.');kickDelay=10;}
     }
     
     var delayed = {};
@@ -93,13 +95,19 @@ registerPlugin({
         }
     }
     
+    var convertToRegex = function(string) {
+        string = string.substr(1);
+        var arr = string.split("/");
+        return new RegExp(arr[0],arr[1]);
+    }
+    
     var checkName = function(id, uuid, name){
         if(ignoredClients.indexOf(id.toString()) >= 0 || ignoredClients.indexOf(uuid) >= 0) return false;
         var expression, reg;
         for(var i = 0; i < expressions.length; i++){
             expression = expressions[i];
             if(expression.match(/^\/.*\/.*$/)){
-                reg = new RegExp(expression);
+                reg = convertToRegex(expression);
                 if(name.match(reg)){
                     logFunc('badUsername', {id: id, uuid: uuid, client: name, match: expression});
                     return true;
@@ -126,7 +134,7 @@ registerPlugin({
             kickServer(id, msg);
         } else {
             var msg = messages.warn;
-            msg = msg.replace(/%n/ig, nick).replace(/%d/ig, config.kickDelay.toString() + ' sec.');
+            msg = msg.replace(/%n/ig, nick).replace(/%d/ig, kickDelay.toString() + ' sec.');
             chatPrivate(id, msg);
             delayed[id] = {uuid: uuid, nick: nick, time: Date.now()};
         }
@@ -158,15 +166,33 @@ registerPlugin({
         checkClient(ev.clientId, ev.clientUid, ev.clientNick);
     });
     
+    var checkAllClients = function(){
+        var channels = getChannels(), channel, clients, client;
+        for(var i = 0; i<channels.length; i++){
+            channel = channels[i];
+            if(!channel.clients) continue;
+            clients = channel.clients;
+            for(var j = 0; j<clients.length; j++){
+                client = clients[j];
+                checkClient(client.id, client.uid, client.nick);
+            }
+        }
+    }
+    
+    sinusbot.on('connect', function(){
+        checkAllClients();
+    });
+    
     if(type == 2){
-        var ctr = -1, time;
-        sinusbot.on('timer', function (ev){
+        var ctr = -1, time, client;
+        sinusbot.on('timer', function(){
             ctr++;
-            if((counter % 5) != 0) return;        
+            if((ctr % 5) != 0) return;        
             time = Date.now();
             for (var id in delayed){
-                if (delayed[id].time + config.kickDelay > time) continue;
-                if (!checkName(id, delayed[id].uuid, delayed[id].nick)) delete delayed[id]; 
+                if (delayed[id].time + kickDelay * 1000 > time) continue;
+                client = getClient(id);
+                if (!checkName(id, client.uid, client.nick)) delete delayed[id]; 
                 var msg = messages.kick;
                 msg = msg.replace(/%n/ig, delayed[id].nick);
                 kickServer(id, msg);
@@ -175,6 +201,7 @@ registerPlugin({
         });
     }
     
-    log('[Bad Usernames] Initiated script. Now works :)');
+    checkAllClients();
+    log('[Bad Usernames] Initialized script.');
     
 });
