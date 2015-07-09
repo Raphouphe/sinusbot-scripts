@@ -24,8 +24,8 @@
 
 registerPlugin({
     name: 'Idle Mover',
-    version: '2.7',
-    description: 'The bot will move all clients that are idle longer than the time given (in seconds) to a separate channel',
+    version: '3.0',
+    description: 'The bot will move all clients that are idling longer than the given time (in seconds) to a separate channel',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
         idleTime: {
@@ -38,8 +38,8 @@ registerPlugin({
             type: 'string'
         },
         exemptChannel: {
-            title: 'Comma-separated list of ignored channels',
-            type: 'string'
+            title: 'List of ignored channels',
+            type: 'multiline'
         },
         sendIdleMessage: {
             title: 'If the bot has to sent the idle message to each client which is moved',
@@ -50,7 +50,7 @@ registerPlugin({
             ]
         },
         idleMessage: {
-            title: 'Message sent privatly to each client which is moved after idling to long',
+            title: 'Message sent privatly to each client which is moved after idling too long. (supports BBCodes)',
             type: 'string',
             placeholder: 'You have been moved.'
         },
@@ -69,7 +69,24 @@ registerPlugin({
         }
     }
 }, function(sinusbot, config) {
-    var exemptNames = config.exemptChannel.split(',').map(function(e) { return e.trim() });
+    if (!config.idleTime) {log('[Idle Mover] Invalid idle time'); return;}
+    if (!config.idleChannel) {log('[Idle Mover] Invalid idle channel name'); return;}
+    if (!config.exemptChannel) {log('[Idle Mover] Invalid names of exempted channels'); config.exemptChannel = "";}
+    if (!config.sendIdleMessage) {log('[Idle Mover] Not selected: send idle message'); return;}
+    if (!config.idleMessage) {log('[Idle Mover] Invalid idle message'); return;}
+    if (!config.checksPerMinute) {log('[Idle Mover] Invalid amount of checks per minute'); return;}
+    if (!config.ignoreIfOutputIsntMuted) {log('[Idle Mover] Not selected: ignoring client if speakers aren\'t disabled'); return;}
+    
+    var exemptNames = config.exemptChannel.split('\n').map(function(e) { return e.trim().replace(/\r/g, ''); });
+    
+    var sendIdleMessage = config.sendIdleMessage;
+    if(typeof sendIdleMessage != 'number'){
+        sendIdleMessage = parseInt(sendIdleMessage);
+    }
+    var ignoreIfOutputIsntMuted = config.ignoreIfOutputIsntMuted;
+    if(typeof ignoreIfOutputIsntMuted != 'number'){
+        ignoreIfOutputIsntMuted = parseInt(ignoreIfOutputIsntMuted);
+    }
     
     var counter = 0;
     var idleChannel = 0;
@@ -82,9 +99,11 @@ registerPlugin({
         return;
     } 
     if (config.checksPerMinute > 30) {
-        log('[Idle Mover] The bot won\'t check more than 30 times a minute, if the clients are idling...');
+        log('[Idle Mover] The bot won\'t check if the clients are idling more than 30 times a minute...');
         return;
     }
+
+    var msg = config.idleMessage.replace(/(?:[url=.{1,}])?((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)(?:[/url])?/gi,'[url=$1]$1[/url]');
 
     sinusbot.on('timer', function() {
         counter++;
@@ -110,20 +129,27 @@ registerPlugin({
                     client = channel.clients[j];
                     if (client.id == self) continue;
                     if (whitelist[client.id]) continue;
-                    if (config.ignoreIfOutputIsntMuted == 0) {
+                    if (client.away && client.idle > config.idleTime * 500){
+                        log('Client ' + client.nick + ' is idling, moving');
+                        if(sendIdleMessage == 0) chatPrivate(client.id, msg);
+                        move(client.id, idleChannel);
+                        continue;
+                    }
+                    if (ignoreIfOutputIsntMuted == 0) {
                         if (!client.outputMuted) continue;
                     }
-                    if (client.idle > config.idleTime * 1000 || (client.away && client.idle > config.idleTime * 500)) {
+                    if (client.idle > config.idleTime * 1000) {
                         log('Client ' + client.nick + ' is idling, moving');
-                        chatPrivate(client.id, config.idleMessage);
+                        if(sendIdleMessage == 0) chatPrivate(client.id, msg);
                         move(client.id, idleChannel);
+                        continue;
                     }
                 }
             }
         }
     });
 	
-    sinusbot.on('move', function(){
+    sinusbot.on('move', function(ev){
         if(ev.oldChannel == idleChannel){
             whitelist[ev.clientId] = Date.now();
         }
@@ -150,7 +176,7 @@ registerPlugin({
     updateChannels();
     sinusbot.on('connect', updateChannels);
 
-    log('[Idle Mover] Idle Mover initialized...');
+    log('[Idle Mover] Initialized script.');
 });
 
 

@@ -24,26 +24,92 @@
 
 registerPlugin({
     name: 'Bad Channel Names',
-    version: '1.1',
+    version: '2.0',
     description: 'This script will remove all channels matching some userdefined names.',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
         names: {
-            title: 'Comma-separated list of forbidden names',
+            title: 'List of forbidden names or regex (one per line)',
+            type: 'multiline'
+        },
+        ignoredChannels: {
+            title: 'Comma-separated list of ignored channel-ids',
             type: 'string'
         }
     }
 }, function(sinusbot, config) {
-    var names = config.names.split(',').map(function(e) { return e.trim() });
+    if (!config.names) {log('[BCN] Invalid channel names'); return;}
+    var ignoredChannels = [];
+    if (config.ignoredChannels){
+        ignoredChannels = config.ignoredChannels.split('\n').map(function(e) { 
+            var n = parseInt(e.trim().replace(/\r/g, ''));
+            if(!n){
+                return -1;
+            }
+            return n;
+        }); 
+    }
+    
+    var names = config.names.split('\n').map(function(e) { return e.trim().replace(/\r/g, ''); });
+    
+    var convertToRegex = function(string) {
+        string = string.substr(1);
+        var arr = string.split("/");
+        return new RegExp(arr[0],arr[1]);
+    }
+    
     sinusbot.on('channelCreate', function(ev) {
         if (!ev.name) return; // should not happen
+        if (ignoredChannels.indexOf(ev.id) >= 0) return;
+        var expression, reg;
         for (var i = 0; i < names.length; i++) {
-            if (ev.name.toLowerCase().indexOf(names[i].toLowerCase()) >= 0) {
-                log('Deleting channel ' + ev.name);
-                channelDelete(ev.id, true);
-                return;
+            expression = names[i];
+            log('exp: '+expression);
+            if (expression.match(/^\/.*\/.*$/)){
+                reg = convertToRegex(names[i]);
+                if(ev.name.match(reg)){
+                    log('[BCN] Deleting channel ' + ev.name);
+                    channelDelete(ev.id, true);
+                    return;
+                }
+            } else {
+                if (ev.name.toLowerCase().indexOf(expression.toLowerCase()) >= 0) {
+                    log('[BCN] Deleting channel ' + ev.name);
+                    channelDelete(ev.id, true);
+                    return;
+                }
             }
         }
     });
+    
+    var updateChannels = function() {
+        var channels = getChannels();
+        var removed = [];
+        var channel;
+        for(var j = 0; j < channels.length; j++){
+            channel = channels[j];
+            if (ignoredChannels.indexOf(channel.id) >= 0) continue;
+            for (var i = 0; i < names.length; i++) {
+                if (names[i].match(/^\/.*\/.*$/)){
+                    var reg = convertToRegex(names[i]);
+                    if(channel.name.match(reg)){
+                        removed.push(channel.name);
+                        channelDelete(channel.id, true);
+                    }
+                } else {
+                    if (channel.name.toLowerCase().indexOf(names[i].toLowerCase()) >= 0) {
+                        removed.push(channel.name);
+                        channelDelete(channel.id, true);
+                    }
+                }
+            }
+        }
+        if(removed.length > 0) log('[BCN] Removed following channels: ' + removed.toString());
+    };
+    
+    updateChannels();
+    sinusbot.on('connect', updateChannels);
+    log('[BCN] Initialized Script.');
+    
 });
 
