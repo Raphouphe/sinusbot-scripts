@@ -24,7 +24,7 @@
 
 registerPlugin({
     name: 'Bad Channel Names',
-    version: '1.1',
+    version: '1.2',
     description: 'This script will remove all channels matching some userdefined names.',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
@@ -52,12 +52,18 @@ registerPlugin({
     
     var names = config.names.split('\n').map(function(e) { return e.trim().replace(/\r/g, ''); });
     
+    var convertToRegex = function(string) {
+        string = string.substr(1);
+        var arr = string.split("/");
+        return new RegExp(arr[0],arr[1]);
+    }
+    
     sinusbot.on('channelCreate', function(ev) {
         if (!ev.name) return; // should not happen
         if (ignoredChannels.indexOf(ev.id) >= 0) return;
         for (var i = 0; i < names.length; i++) {
             if (names[i].match(/^\/.*\/.*$/)){
-                var reg = new RegExp(names[i]);
+                var reg = convertToRegex(names[i]);
                 if(ev.name.match(reg)){
                     log('Deleting channel ' + ev.name);
                     channelDelete(ev.id, true);
@@ -82,7 +88,7 @@ registerPlugin({
             if (ignoredChannels.indexOf(channel.id) >= 0) continue;
             for (var i = 0; i < names.length; i++) {
                 if (names[i].match(/^\/.*\/.*$/)){
-                    var reg = new RegExp(names[i]);
+                    var reg = convertToRegex(names[i]);
                     if(channel.name.match(reg)){
                         removed.push(channel.name);
                         channelDelete(channel.id, true);
@@ -100,6 +106,7 @@ registerPlugin({
     
     updateChannels();
     sinusbot.on('connect', updateChannels);
+    log('[BCN] Initialized Script.');
     
 });
 
