@@ -24,7 +24,7 @@
 
 registerPlugin({
     name: 'Bad Channel Names',
-    version: '1.2',
+    version: '2.0',
     description: 'This script will remove all channels matching some userdefined names.',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
