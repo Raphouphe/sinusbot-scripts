@@ -61,17 +61,20 @@ registerPlugin({
     sinusbot.on('channelCreate', function(ev) {
         if (!ev.name) return; // should not happen
         if (ignoredChannels.indexOf(ev.id) >= 0) return;
+        var expression, reg;
         for (var i = 0; i < names.length; i++) {
-            if (names[i].match(/^\/.*\/.*$/)){
-                var reg = convertToRegex(names[i]);
+            expression = names[i];
+            log('exp: '+expression);
+            if (expression.match(/^\/.*\/.*$/)){
+                reg = convertToRegex(names[i]);
                 if(ev.name.match(reg)){
-                    log('Deleting channel ' + ev.name);
+                    log('[BCN] Deleting channel ' + ev.name);
                     channelDelete(ev.id, true);
                     return;
                 }
             } else {
-                if (ev.name.toLowerCase().indexOf(names[i].toLowerCase()) >= 0) {
-                    log('Deleting channel ' + ev.name);
+                if (ev.name.toLowerCase().indexOf(expression.toLowerCase()) >= 0) {
+                    log('[BCN] Deleting channel ' + ev.name);
                     channelDelete(ev.id, true);
                     return;
                 }
@@ -101,7 +104,7 @@ registerPlugin({
                 }
             }
         }
-        log('[BCN] Removed following channels: ' + removed.toString());
+        if(removed.length > 0) log('[BCN] Removed following channels: ' + removed.toString());
     };
     
     updateChannels();
