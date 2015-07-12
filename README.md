@@ -4,7 +4,7 @@ Scripts for the SinusBot (http://sinusbot.com)
 #### Idle Mover (idle.js)
 <blockquote>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphi@bypit.de) + <a href="https://github.com/flyth">flyth</a><br />
-Version: 2.0<br />
+Version: 3.0<br />
 Description: This script will move all idling clients to a defined channel.
 </blockquote>
 <hr />
