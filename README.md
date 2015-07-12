@@ -1,6 +1,5 @@
 ### SinusBot Scripts
 <blockquote><h4><em>Scripts for the SinusBot (http://sinusbot.com)</em></h4></blockquote>
-<hr />
 <br />
 
 #### How do I know if I can use these scripts?
@@ -9,7 +8,8 @@ If you use a version, in which the script-fetaure is already implemented, you wi
 #### How do I "install" these scripts?
 You will need access on the SinusBot files. There is a folder named `scripts`. You will have to download the script-file and moved it into this directory. <br/>
 Then you just have to restart your bot, and they will appear in sour `Scripts` section.
-
+<br />
+<br />
 #### Scripts
 <blockquote>
 <h4>Idle Mover (idle.js)</h4>
