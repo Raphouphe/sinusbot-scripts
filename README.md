@@ -1,16 +1,14 @@
 ### SinusBot Scripts
-<blockquote><h3><em>Scripts for the SinusBot (http://sinusbot.com)</em></h3></blockquote>
+<blockquote><h4><em>Scripts for the SinusBot (http://sinusbot.com)</em></h4></blockquote>
+<hr />
+<br />
 
 #### How do I know if I can use these scripts?
-<blockquote>
-If you use a version, in which the script-fetaure is already implemented, you will find a ```Scripts``` section in your ```Settings```.
-</blockquote>
+If you use a version, in which the script-fetaure is already implemented, you will find a `Scripts` section in your `Settings`.
 
 #### How do I "install" these scripts?
-<blockquote>
-You will need access on the SinusBot files. There is a folder named ```scripts```. You will have to download the script-file and moved it into this directory. <br/>
-Then you just have to restart your bot, and they will appear in sour ```Scripts``` section.
-</blockquote>
+You will need access on the SinusBot files. There is a folder named `scripts`. You will have to download the script-file and moved it into this directory. <br/>
+Then you just have to restart your bot, and they will appear in sour `Scripts` section.
 
 #### Scripts
 <blockquote>
