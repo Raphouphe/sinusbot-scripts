@@ -25,24 +25,24 @@
 registerPlugin({
     name: 'Idle Mover',
     version: '3.0',
-    description: 'The bot will move all clients that are idling longer than the given time (in seconds) to a separate channel',
+    description: 'This script will move all idling clients to a defined channel. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
         idleTime: {
-            title: 'Number of seconds idle',
+            title: 'Idle time',
             type: 'number',
             placeholder: '600'
         },
         idleChannel: {
-            title: 'Name of the channel to move the client into',
+            title: 'Idle channel',
             type: 'string'
         },
         exemptChannel: {
-            title: 'List of ignored channels',
+            title: 'Exempted channels',
             type: 'multiline'
         },
         sendIdleMessage: {
-            title: 'If the bot has to sent the idle message to each client which is moved',
+            title: 'Send idle message',
             type: 'select',
             options: [
                 'Send',
@@ -50,17 +50,17 @@ registerPlugin({
             ]
         },
         idleMessage: {
-            title: 'Message sent privatly to each client which is moved after idling too long. (supports BBCodes)',
+            title: 'Idle message',
             type: 'string',
             placeholder: 'You have been moved.'
         },
         checksPerMinute: {
-            title: 'Number of times per minute the bot will check if the clients are idling',
+            title: 'Checks per minute',
             type: 'number',
             placeholder: '2'
         },
         ignoreIfOutputIsntMuted: {
-            title: 'If the clients which speakers aren\'t disabled, has to be ignored by the idle mover',
+            title: 'Speakers not disabled',
             type: 'select',
             options: [
                 'Ignore Client',
