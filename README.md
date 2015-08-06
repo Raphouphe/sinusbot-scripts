@@ -31,7 +31,7 @@ Then you just have to restart your bot, and they will appear in sour `Scripts` s
 #### Scripts
 <blockquote>
 <h4>Idle Mover (idle.js)</h4>
-Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphi@bypit.de) & <a href="https://github.com/flyth">flyth</a><br />
+Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will move all idling clients to a defined channel.
 </blockquote>
 <hr />
@@ -49,7 +49,7 @@ Description: This script will move all idling clients to a defined channel.
 <br />
 <blockquote>
 <h4>Advertising (advertising.js)</h4>
-Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphi@bypit.de) & <a href="https://github.com/flyth">flyth</a><br />
+Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will announce one of the configured lines every x seconds.
 </blockquote>
 <hr />
@@ -64,7 +64,7 @@ Description: This script will announce one of the configured lines every x secon
 <br />
 <blockquote>
 <h4>Bad Channel Names (badchan.js)</h4>
-Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphi@bypit.de) & <a href="https://github.com/flyth">flyth</a><br />
+Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will remove all channels matching some userdefined names.
 </blockquote>
 <hr />
