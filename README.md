@@ -1,3 +1,21 @@
+SinusBot Scripts. JavaScript Scripts by Raphael Touet for the SinusBot by flyth (https://frie.se)
+Copyright (C) 2015 Raphael Touet (@Raphouphe)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can find a copy of the GNU General Public Licence in the [LICENCE](LICENCE) file.
+
 ### SinusBot Scripts
 <blockquote><h4><em>Scripts for the SinusBot (http://sinusbot.com)</em></h4></blockquote>
 <br />
@@ -13,8 +31,7 @@ Then you just have to restart your bot, and they will appear in sour `Scripts` s
 #### Scripts
 <blockquote>
 <h4>Idle Mover (idle.js)</h4>
-Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphi@bypit.de) + <a href="https://github.com/flyth">flyth</a><br />
-Version: 3.0<br />
+Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphi@bypit.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will move all idling clients to a defined channel.
 </blockquote>
 <hr />
@@ -32,20 +49,30 @@ Description: This script will move all idling clients to a defined channel.
 <br />
 <blockquote>
 <h4>Advertising (advertising.js)</h4>
+Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphi@bypit.de) & <a href="https://github.com/flyth">flyth</a><br />
+Description: This script will announce one of the configured lines every x seconds.
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
 <table>
 <tr><th>Setting</th><th>Description</th><th>Values</th></tr>
+<tr><td>Ads</td><td>Multiple lines which defines the sent ads. BBCodes are supported!<br />Normally urls starting with <code>http://</code> or <code>https://</code> are automatically converted into a clickable url.</td><td>One ad per line</td></tr>
+<tr><td>Interval</td><td>The time in SECONDS between each ad is sent.</td><td>A valid number of seconds</td></tr>
+<tr><td>Order</td><td>Either the ads should be sent randomly or line by line.</td><td></td></tr>
+<tr><td>Broadcast-Type</td><td>Either the ads should be sent in the server-chat, channel-chat or to each client privatly (not recommended).</td><td></td></tr>
 </table>
 <br />
 <blockquote>
 <h4>Bad Channel Names (badchan.js)</h4>
+Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphi@bypit.de) & <a href="https://github.com/flyth">flyth</a><br />
+Description: This script will remove all channels matching some userdefined names.
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
 <table>
 <tr><th>Setting</th><th>Description</th><th>Values</th></tr>
+<tr><td>Forbidden channels</td><td>List of forbidden names or regex (one per line).</td><td>One chnnale-name or regex expression per line</td></tr>
+<tr><td>Ignored channels</td><td>Comma-separated list of ignored channel-ids.</td><td>Comma-separated list of valid numbers</td></tr>
 </table>
 <br />
 <blockquote>
