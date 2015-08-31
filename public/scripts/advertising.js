@@ -23,7 +23,7 @@
  */
 registerPlugin({
     name: 'Advertising (Text)',
-    version: '1.3',
+    version: '1.4',
     description: 'This script will announce one of the configured lines every x seconds. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
@@ -72,7 +72,7 @@ registerPlugin({
     var type = config.type;
     if(typeof type != 'number') type = parseInt(type);
     
-    var ctr = 0, channel, client, channels;
+    var ctr = 0, client, clients;
     
     sinusbot.on('timer', function() {
         ctr++;
@@ -86,16 +86,34 @@ registerPlugin({
         } else if(type == 1) {
             chatServer(ads[ad]);
         } else {
-            channels = getChannels();
-            for (var i = 0; i < channels.length; i++) {
-                channel = channels[i];
-                for (var j = 0; j < channel.clients.length; j++) {
-                    client = channel.clients[j];
-                    chatPrivate(client.id, ads[ad]);
-                }
+            clients = getClients();
+            for (var j = 0; j < clients.length; j++) {
+                client = clients[j];
+                chatPrivate(client.id, ads[ad]);
             }
         }
     });
+    
+    var getClients = function(channel_id) {
+        var channel, channels, clients = [];
+        channels = getChannels();
+        if (typeof channel_id == 'undefined') { 
+            for(var i = 0; i < channels.length; i++){
+                channel = channels[i];
+                clients.push(channel.clients);
+                return clients;
+            }
+        } else {
+            for(var i = 0; i < channels.length; i++){
+                channel = channels[i];
+                if(channel.id == channel_id){
+                    return channel.clients;
+                    break;
+                }
+            }
+        }
+        return [];
+    };
     
     log('[Advertising] Initialized script.');
 });
