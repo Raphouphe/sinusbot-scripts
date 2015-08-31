@@ -23,7 +23,7 @@
  */
 registerPlugin({
     name: 'Advertising (Text)',
-    version: '1.2',
+    version: '1.3',
     description: 'This script will announce one of the configured lines every x seconds. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
@@ -72,7 +72,7 @@ registerPlugin({
     var type = config.type;
     if(typeof type != 'number') type = parseInt(type);
     
-    var ctr = 0;
+    var ctr = 0, channel, client, channels;
     
     sinusbot.on('timer', function() {
         ctr++;
@@ -86,8 +86,7 @@ registerPlugin({
         } else if(type == 1) {
             chatServer(ads[ad]);
         } else {
-            var channel, client;
-            var channels = getChannels();
+            channels = getChannels();
             for (var i = 0; i < channels.length; i++) {
                 channel = channels[i];
                 for (var j = 0; j < channel.clients.length; j++) {
