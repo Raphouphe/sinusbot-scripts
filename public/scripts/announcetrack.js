@@ -39,6 +39,7 @@ registerPlugin({
         }
     }
 }, function(sinusbot, config){
+    log("[Ann. Track] Announce Tracks v1.0 by Raphael Touet");
     
     var msg = config.message, message;
     var locale = config.locale;
@@ -59,5 +60,7 @@ registerPlugin({
                 .replace(/%d/gi,((typeof ev.duration !== 'undefined' && ev.duration > 0) ? ev.duration : ''));
         say(message,locale);   
     });
+    
+    log('[Ann. Track] Initialized script.');
     
 });

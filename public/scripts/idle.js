@@ -35,7 +35,7 @@ registerPlugin({
         },
         idleChannel: {
             title: 'Idle channel',
-            type: 'string'
+            type: 'channel'
         },
         exemptChannel: {
             title: 'Exempted channels',
@@ -71,7 +71,7 @@ registerPlugin({
 }, function(sinusbot, config) {
     if (!config.idleTime) {log('[Idle Mover] Invalid idle time'); return;}
     if (!config.idleChannel) {log('[Idle Mover] Invalid idle channel name'); return;}
-    if (!config.exemptChannel) {log('[Idle Mover] Invalid names of exempted channels'); config.exemptChannel = "";}
+    if (!config.exemptChannel) {config.exemptChannel = "";}
     if (!config.sendIdleMessage) {log('[Idle Mover] Not selected: send idle message'); return;}
     if (!config.idleMessage) {log('[Idle Mover] Invalid idle message'); return;}
     if (!config.checksPerMinute) {log('[Idle Mover] Invalid amount of checks per minute'); return;}
@@ -89,7 +89,7 @@ registerPlugin({
     }
     
     var counter = 0;
-    var idleChannel = 0;
+    var idleChannel = parseInt(config.idleChannel);
     var exemptChannels = [];
     
     var whitelist = {};
@@ -158,10 +158,10 @@ registerPlugin({
     var updateChannels = function() {
         log('[Idle Mover] Connected, getting channels');
         var channels = getChannels();
-        var channel_names = channels.map(function(e) { return e.name });
-        if(channel_names.indexOf(config.idleChannel) >= 0){
-            idleChannel = channels[channel_names.indexOf(config.idleChannel)].id;
-            log('[Idle Mover] Idle-Channel will be ' + idleChannel);
+        for(var i = 0; i<channels.length; i++){
+            if(channels[i].id == idleChannel) {
+                log('[Idle Mover] Idle-Channel will be ' + channels[i].name);
+            }
         }
         for(var i = 0; i < exemptNames.length; i++){
             if(channel_names.indexOf(exemptNames[i]) >= 0){
