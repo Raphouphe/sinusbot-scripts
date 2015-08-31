@@ -48,6 +48,8 @@ registerPlugin({
         }
     }
 }, function(sinusbot, config){
+    log("[J-Greet] Join-Greeting v2.0 by Raphael Touet");
+    
     if(!config.message) {log('[J-Greet] Invalid message');return;}
     if(!config.type) {log('[J-Greet] Invalid type');return;}
     
