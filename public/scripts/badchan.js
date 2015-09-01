@@ -64,7 +64,6 @@ registerPlugin({
         var expression, reg;
         for (var i = 0; i < names.length; i++) {
             expression = names[i];
-            log('exp: '+expression);
             if (expression.match(/^\/.*\/.*$/)){
                 reg = convertToRegex(names[i]);
                 if(ev.name.match(reg)){
