@@ -18,14 +18,14 @@
 /*
  * 
  * @author Michanel Friese <michael@sinusbot.com>
- * @author Raphael Touet <raphi@bypit.de>
+ * @author Raphael Touet <raphraph@raphraph.de>
  * 
  */
 registerPlugin({
     name: 'Advertising (Text)',
     version: '1.4',
     description: 'This script will announce one of the configured lines every x seconds. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
-    author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
+    author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphraph@raphraph.de>',
     vars: {
         ads: {
             title: 'Ads (supports bbcode)',

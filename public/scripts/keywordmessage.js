@@ -15,6 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+ * 
+ * @author Am4n <am4n.ar@gmail.com>
+ * @author Raphael Touet <raphraph@raphraph.de>
+ * 
+ */
+
 registerPlugin({
     name: 'Keyword Message',
     version: '2.1',

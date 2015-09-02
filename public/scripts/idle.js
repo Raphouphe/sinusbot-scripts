@@ -18,7 +18,7 @@
 /*
  * 
  * @author Michael Friese <michael@sinusbot.com>
- * @author Raphael Touet <raphi@bypit.de>
+ * @author Raphael Touet <raphraph@raphraph.de>
  * 
  */
 
@@ -26,7 +26,7 @@ registerPlugin({
     name: 'Idle Mover',
     version: '3.0',
     description: 'This script will move all idling clients to a defined channel. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
-    author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
+    author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphraph@raphraph.de>',
     vars: {
         idleTime: {
             title: 'Idle time',

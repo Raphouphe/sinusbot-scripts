@@ -18,7 +18,7 @@
 /*
  * 
  * @author Michael Friese <michael@sinusbot.com>
- * @author Raphael Touet <raphi@bypit.de>
+ * @author Raphael Touet <raphraph@raphraph.de>
  * 
  */
 
@@ -26,7 +26,7 @@ registerPlugin({
     name: 'Bad Channel Names',
     version: '2.1',
     description: 'This script will remove all channels matching some userdefined names. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
-    author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
+    author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphraph@raphraph.de>',
     vars: {
         names: {
             title: 'Forbidden channels (names)',

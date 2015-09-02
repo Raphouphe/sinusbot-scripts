@@ -18,14 +18,14 @@
 /*
  * 
  * @author Michael Friese <michael@sinusbot.com>
- * @author Raphael Touet <raphi@bypit.de>
+ * @author Raphael Touet <raphraph@raphraph.de>
  * 
  */
 registerPlugin({
     name: 'No Recording!',
     version: '2.0',
     description: 'This script will kick anyone who attempts to record.',
-    author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
+    author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphraph@raphraph.de>',
     vars: {
         kickMessage: {
             title: 'Used kick message',

@@ -17,7 +17,7 @@
 
 /*
  * 
- * @author Raphael Touet <raphi@bypit.de>
+ * @author Raphael Touet <raphraph@raphraph.de>
  * 
  */
 
@@ -25,18 +25,18 @@ registerPlugin({
     name: 'Bad Usernames',
     version: '1.0',
     description: 'This script will warn / kick / warn and kick all users matching some userdefined names or regex expressions.',
-    author: 'Raphael Touet <raphi@bypit.de>',
+    author: 'Raphael Touet <raphraph@raphraph.de>',
     vars: {
         expressions: {
-            title: 'List of forbidden names or regex expressions (one per line)',
+            title: 'Forbidden names/regex (one per line)',
             type: 'multiline'
         },
         ignoredClients: {
-            title: 'Comma-separated list of ignored client ids or uuids',
+            title: 'Ignored client ids/uuids',
             type: 'string'
         },
         type: {
-            title: 'If the client has to be warned / kicked or both',
+            title: 'Warn/Kick/Both',
             type: 'select',
             options: [
                 'Warn',
@@ -45,13 +45,13 @@ registerPlugin({
             ]
         },
         messages: {
-            title: 'The messages sent to the client. (First line: warn message, Second line: kick message) (Use: %n -> client nick, %d -> delay before being kicked)',
+            title: 'Messages (First line: warn message, Second line: kick message) (Use: %n -> client nick, %d -> delay before being kicked)',
             type: 'multiline'
         },
         kickDelay: {
-            title: 'The delay (in seconds) before the name of the client is checked again, and if it\'s a bad name the client get kicked. (cannot be lower than 30) (can differ up to 5 seconds)',
+            title: 'Check-delay (cannot be lower than 30) (can differ up to 5 seconds)',
             type: 'number',
-            placeholder: '10'
+            placeholder: '30'
         }
     }
 }, function(sinusbot, config) {
@@ -93,13 +93,13 @@ registerPlugin({
             log('[Bad Usernames] ' + ((type == 0 || type == 2) ? "Warning" : "Kicking" ) + ' \'' + params['client'] + '\' with id \'' + 
                     params['id'] + '\' and uuid \'' + params['uuid'] +'\' (matches: ' + params['match'] +')');
         }
-    }
+    };
     
     var convertToRegex = function(string) {
         string = string.substr(1);
         var arr = string.split("/");
         return new RegExp(arr[0],arr[1]);
-    }
+    };
     
     var checkName = function(id, uuid, name){
         if(ignoredClients.indexOf(id.toString()) >= 0 || ignoredClients.indexOf(uuid) >= 0) return false;
@@ -120,7 +120,7 @@ registerPlugin({
             }
         }
         return false;
-    }
+    };
     
     var checkClient = function (id, uuid, nick){
         if (!checkName(id, uuid, nick)) return;
@@ -138,7 +138,7 @@ registerPlugin({
             chatPrivate(id, msg);
             delayed[id] = {uuid: uuid, nick: nick, time: Date.now()};
         }
-    }
+    };
     
     var getClient = function (id){
         var channels = getChannels();
@@ -154,17 +154,7 @@ registerPlugin({
             }
         }
         return false;
-    }
-    
-    sinusbot.on('clientMove', function(ev){
-        if(ev.oldChannel == 0){
-            checkClient(ev.clientId, ev.clientUid, ev.clientNick);
-        }
-    });
-    
-    sinusbot.on('nick', function(ev){
-        checkClient(ev.clientId, ev.clientUid, ev.clientNick);
-    });
+    };
     
     var checkAllClients = function(){
         var channels = getChannels(), channel, clients, client;
@@ -177,7 +167,17 @@ registerPlugin({
                 checkClient(client.id, client.uid, client.nick);
             }
         }
-    }
+    };
+    
+    sinusbot.on('clientMove', function(ev){
+        if(ev.oldChannel == 0){
+            checkClient(ev.clientId, ev.clientUid, ev.clientNick);
+        }
+    });
+    
+    sinusbot.on('nick', function(ev){
+        checkClient(ev.clientId, ev.clientUid, ev.clientNick);
+    });
     
     sinusbot.on('connect', function(){
         checkAllClients();

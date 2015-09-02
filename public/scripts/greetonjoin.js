@@ -17,19 +17,19 @@
 
 /*
  * 
- * @author Raphael Touet <raphi@bypit.de>
+ * @author Raphael Touet <raphraph@raphraph.de>
  * 
  */
 registerPlugin({
     name: 'Join-Greeting',
     version: '2.0',
-    description: 'This plugin will let the bot greet everyone who joins the channel.',
-    author: 'Raphael Touet <raphi@bypit.de>',
+    description: 'This script will let the bot greet everyone who joins the channel.',
+    author: 'Raphael Touet <raphraph@raphraph.de>',
     vars: {
         message: {
-            title: 'The message that should be displayed or sayed. (%n = nickname)',
+            title: 'Message (%n = nickname)',
             type: 'string',
-            placeholder: 'Welcome %n'
+            placeholder: 'f.e. Welcome %n'
         },
         type: {
             title: 'Message-Type',
@@ -42,9 +42,9 @@ registerPlugin({
             ]
         },
         locale: {
-            title: 'The locale used if \'type\' is set to \'say\'.',
+            title: 'Locale (used if \'Message-Type\' is set to \'Say\')',
             type: 'string',
-            placeholder: 'en'
+            placeholder: 'f.e. en'
         }
     }
 }, function(sinusbot, config){

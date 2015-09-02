@@ -84,21 +84,35 @@ Tested with version: SinusBot v0.9.9-6fb4fe2
 
 <blockquote>
 <h4>Bad Usernames (badusername.js)</h4>
+Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de)<br />
+Description: This script will remove all channels matching some userdefined names.
+Tested with version: --
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
 <table>
 <tr><th>Setting</th><th>Description</th><th>Values</th></tr>
+<tr><th>Forbidden names/regex</th><th>The names or regular expressions defining which channel isn't allowed.</th><th>A name or Regular Expression ecach line</th></tr>
+<tr><th>Ignored client ids/uuids</th><th>The ids or uuids of the clients which will be ignored by the script.</th><th>A comma seperated list withc ids and uuids</th></tr>
+<tr><th>Warn/Kick/Both</th><th>Which action should be performed on the client.</th><th><em>Just select one of the given options.</em></th></tr>
+<tr><th>Messages</th><th>The messages sent to the client</th><th>First line: warn message<br />Second line: kick message</th></tr>
+<tr><th>Check-delay</th><th>The delay (in seconds) before the name of the client is checked again, and if it\'s a bad name the client get kicked.</th><th>A number</th></tr>
 </table>
 <br />
 
 <blockquote>
-<h4>Greet On Join (greetonojoin.js)</h4>
+<h4>Join-Greeting (greetonjoin.js)</h4>
+Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de)<br />
+Description: This script will let the bot greet everyone who joins the channel.
+Tested with version: --
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
 <table>
 <tr><th>Setting</th><th>Description</th><th>Values</th></tr>
+<tr><th>Message</th><th>The message that should be displayed or sayed. If 'Message-Type' is set to anything except of 'Say', BBCodes are supported.</th><th>A message</th></tr>
+<tr><th>Message-Type</th><th>The way the client should be notified.</th><th><em>Just select one of the given options.</em></th></tr>
+<tr><th>Locale</th><th>The localse which is used if 'Message-Type' is set to 'Say'</th><th>A valid locale</th></tr>
 </table>
 <br />
 
