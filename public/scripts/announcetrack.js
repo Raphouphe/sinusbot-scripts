@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2015 Raphael Touet <raphi@bypit.de>
+ * Copyright (C) 2015 Raphael Touet <raphraph@raphraph.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
