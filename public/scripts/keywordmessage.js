@@ -17,7 +17,7 @@
 
 registerPlugin({
     name: 'Keyword Message',
-    version: '2.0',
+    version: '2.1',
     description: 'This script will response to some defined keywords. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
     author: 'Am4n <am4n.ar@gmail.com>, Raphael Touet <raphraph@raphraph.de>',
     vars: {
@@ -54,11 +54,12 @@ registerPlugin({
     log("");
     
     if(!config.cs) {log("[Keyword Msg] Please define at least one combination."); return;}
-    if(!config.fs) {log("Keyword Msg] You did not select if the bot should respond on messages from the server-chat. Default (: no) is used.");config.fs=0;}
-    if(!config.fc) {log("Keyword Msg] You did not select if the bot should respond on messages from the channel-chat. Default (: no) is used.");config.fc=0;}
-    if(!config.fp) {log("Keyword Msg] You did not select if the bot should respond on messages from the private-chat. Default (: yes) is used.");config.fp=1;}
+    if(!config.fs) {log("[Keyword Msg] You did not select if the bot should respond on messages from the server-chat. Default (: no) is used.");config.fs=0;}
+    if(!config.fc) {log("[Keyword Msg] You did not select if the bot should respond on messages from the channel-chat. Default (: no) is used.");config.fc=0;}
+    if(!config.fp) {log("[Keyword Msg] You did not select if the bot should respond on messages from the private-chat. Default (: yes) is used.");config.fp=1;}
  
     var fs = config.fs, fc = config.fc, fp = config.fp, sf = getBotId();
+    if(fs == 0 && fc == 0 && fp == 0){log("[Keyword Msg] Script disabled. No input-chat defined.");return;}
  
     var cTR = function(s) {
         s = s.substr(1);
