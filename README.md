@@ -110,3 +110,19 @@ Tested with version: SinusBot v0.9.9-6fb4fe2
 <table>
 <tr><th>Setting</th><th>Description</th><th>Values</th></tr>
 </table>
+
+<blockquote>
+<h4>Keyword Message (keywordmessage.js)</h4>
+Author: <a href="https://forum.sinusbot.com/members/am4n.18/">Am4n</a> (am4n.ar@gmail.com) & <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de)<br />
+Description: This script will response to some defined keywords.
+Tested with version: SinusBot v0.9.9-6fb4fe2
+</blockquote>
+<hr />
+<blockquote><h5>Settings</h5></blockquote>
+<table>
+<tr><th>Setting</th><th>Description</th><th>Values</th></tr>
+<tr><td>Keyword/Command/Regex: Output</td><td>The combinations of keyword and output. A valid combination is build like this: <code>key: output</code>. <code>key</code> should be replaced either by a word, by multiple words, by a regular expression (using the slash <code>/</code> as seperator) or by a command (starting with a dot). <code>output</code> should be replaced by a message. BBCodes are supported.</td><td>One valid combination each line.</td></tr>
+<tr><td>Respond on server-chat.</td><td>If the bot should respond to messages got in the server-chat or not.</td><td><em>Just select one of the given options.</em></td></tr>
+<tr><td>Respond on channel-chat.</td><td>If the bot should respond to messages got in the channel-chat or not.</td><td><em>Just select one of the given options.</em></td></tr>
+<tr><td>Respond on private-chat.</td><td>If the bot should respond to messages got in the private-chat or not.</td><td><em>Just select one of the given options.</em></td></tr>
+</table>
