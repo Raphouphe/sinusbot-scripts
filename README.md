@@ -29,10 +29,12 @@ Then you just have to restart your bot, and they will appear in sour `Scripts` s
 <br />
 <br />
 #### Scripts
+
 <blockquote>
 <h4>Idle Mover (idle.js)</h4>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will move all idling clients to a defined channel.
+Tested with version: --
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
@@ -47,10 +49,12 @@ Description: This script will move all idling clients to a defined channel.
 <tr><td>Speakers not disabled</td><td>Whether to ignore or not, clients whose speakers aren't disabled.</td><td><em>Just select one of the given options.</em></td></tr>
 </table>
 <br />
+
 <blockquote>
 <h4>Advertising (advertising.js)</h4>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will announce one of the configured lines every x seconds.
+Tested with version: --
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
@@ -62,10 +66,12 @@ Description: This script will announce one of the configured lines every x secon
 <tr><td>Broadcast-Type</td><td>Either the ads should be sent in the server-chat, channel-chat or to each client privatly (not recommended).</td><td></td></tr>
 </table>
 <br />
+
 <blockquote>
 <h4>Bad Channel Names (badchan.js)</h4>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will remove all channels matching some userdefined names.
+Tested with version: SinusBot v0.9.9-6fb4fe2
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
@@ -75,6 +81,7 @@ Description: This script will remove all channels matching some userdefined name
 <tr><td>Ignored channels</td><td>Comma-separated list of ignored channel-ids.</td><td>Comma-separated list of valid numbers</td></tr>
 </table>
 <br />
+
 <blockquote>
 <h4>Bad Usernames (badusername.js)</h4>
 </blockquote>
@@ -84,6 +91,7 @@ Description: This script will remove all channels matching some userdefined name
 <tr><th>Setting</th><th>Description</th><th>Values</th></tr>
 </table>
 <br />
+
 <blockquote>
 <h4>Greet On Join (greetonojoin.js)</h4>
 </blockquote>
@@ -93,6 +101,7 @@ Description: This script will remove all channels matching some userdefined name
 <tr><th>Setting</th><th>Description</th><th>Values</th></tr>
 </table>
 <br />
+
 <blockquote>
 <h4>No Recording (norecording.js)</h4>
 </blockquote>
@@ -100,4 +109,20 @@ Description: This script will remove all channels matching some userdefined name
 <blockquote><h5>Settings</h5></blockquote>
 <table>
 <tr><th>Setting</th><th>Description</th><th>Values</th></tr>
+</table>
+
+<blockquote>
+<h4>Keyword Message (keywordmessage.js)</h4>
+Author: <a href="https://forum.sinusbot.com/members/am4n.18/">Am4n</a> (am4n.ar@gmail.com) & <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de)<br />
+Description: This script will response to some defined keywords.
+Tested with version: SinusBot v0.9.9-6fb4fe2
+</blockquote>
+<hr />
+<blockquote><h5>Settings</h5></blockquote>
+<table>
+<tr><th>Setting</th><th>Description</th><th>Values</th></tr>
+<tr><td>Keyword/Command/Regex: Output</td><td>The combinations of keyword and output. A valid combination is build like this: <code>key: output</code>. <code>key</code> should be replaced either by a word, by multiple words, by a regular expression (using the slash <code>/</code> as seperator) or by a command (starting with a dot). <code>output</code> should be replaced by a message. BBCodes are supported.</td><td>One valid combination each line.</td></tr>
+<tr><td>Respond on server-chat.</td><td>If the bot should respond to messages got in the server-chat or not.</td><td><em>Just select one of the given options.</em></td></tr>
+<tr><td>Respond on channel-chat.</td><td>If the bot should respond to messages got in the channel-chat or not.</td><td><em>Just select one of the given options.</em></td></tr>
+<tr><td>Respond on private-chat.</td><td>If the bot should respond to messages got in the private-chat or not.</td><td><em>Just select one of the given options.</em></td></tr>
 </table>

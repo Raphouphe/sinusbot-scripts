@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2015 Raphael Touet <raphi@bypit.de>
+ * Copyright (C) 2015 Raphael Touet <raphraph@raphraph.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 
 registerPlugin({
     name: 'Bad Channel Names',
-    version: '2.0',
+    version: '2.1',
     description: 'This script will remove all channels matching some userdefined names. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphi@bypit.de>',
     vars: {
@@ -64,7 +64,6 @@ registerPlugin({
         var expression, reg;
         for (var i = 0; i < names.length; i++) {
             expression = names[i];
-            log('exp: '+expression);
             if (expression.match(/^\/.*\/.*$/)){
                 reg = convertToRegex(names[i]);
                 if(ev.name.match(reg)){

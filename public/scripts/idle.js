@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2015 Raphael Touet
+ * Copyright (C) 2015 Raphael Touet <raphraph@raphraph.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,15 +81,15 @@ registerPlugin({
     
     var sendIdleMessage = config.sendIdleMessage;
     if(typeof sendIdleMessage != 'number'){
-        sendIdleMessage = parseInt(sendIdleMessage);
+        sendIdleMessage = parseInt(sendIdleMessage, 10);
     }
     var ignoreIfOutputIsntMuted = config.ignoreIfOutputIsntMuted;
     if(typeof ignoreIfOutputIsntMuted != 'number'){
-        ignoreIfOutputIsntMuted = parseInt(ignoreIfOutputIsntMuted);
+        ignoreIfOutputIsntMuted = parseInt(ignoreIfOutputIsntMuted, 10);
     }
     
     var counter = 0;
-    var idleChannel = parseInt(config.idleChannel);
+    var idleChannel = parseInt(config.idleChannel, 10);
     var exemptChannels = [];
     
     var whitelist = {};
