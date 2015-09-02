@@ -17,14 +17,14 @@
 
 /*
  * 
- * @author Raphael Touet <raphi@bypit.de>
+ * @author Raphael Touet <raphraph@raphraph.de>
  * 
  */
 registerPlugin({
     name: 'Join-Greeting',
     version: '2.0',
     description: 'This plugin will let the bot greet everyone who joins the channel.',
-    author: 'Raphael Touet <raphi@bypit.de>',
+    author: 'Raphael Touet <raphraph@raphraph.de>',
     vars: {
         message: {
             title: 'The message that should be displayed or sayed. (%n = nickname)',

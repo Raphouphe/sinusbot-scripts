@@ -17,7 +17,7 @@
 
 /*
  * 
- * @author Raphael Touet <raphi@bypit.de>
+ * @author Raphael Touet <raphraph@raphraph.de>
  * 
  */
 
@@ -25,18 +25,18 @@ registerPlugin({
     name: 'Bad Usernames',
     version: '1.0',
     description: 'This script will warn / kick / warn and kick all users matching some userdefined names or regex expressions.',
-    author: 'Raphael Touet <raphi@bypit.de>',
+    author: 'Raphael Touet <raphraph@raphraph.de>',
     vars: {
         expressions: {
-            title: 'List of forbidden names or regex expressions (one per line)',
+            title: 'Forbidden names/regex (one per line)',
             type: 'multiline'
         },
         ignoredClients: {
-            title: 'Comma-separated list of ignored client ids or uuids',
+            title: 'Ignored client ids/uuids',
             type: 'string'
         },
         type: {
-            title: 'If the client has to be warned / kicked or both',
+            title: 'Warn/Kick/Both',
             type: 'select',
             options: [
                 'Warn',

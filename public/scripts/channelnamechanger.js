@@ -17,7 +17,7 @@
 
 /*
  * 
- * @author Raphael Touet <raphi@bypit.de>
+ * @author Raphael Touet <raphraph@raphraph.de>
  * 
  */
 

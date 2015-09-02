@@ -17,7 +17,7 @@
 
 /*
  * 
- * @author Raphael Touet <raphi@bypit.de>
+ * @author Raphael Touet <raphraph@raphraph.de>
  * 
  */
 
@@ -25,7 +25,7 @@ registerPlugin({
     name: 'Announce Track',
     version: '1.0',
     description: 'This script will announce (say) the specified message, each time a track is played. (Help: https://github.com/Raphouphe/sinusbot-scripts )',
-    author: 'Raphael Touet <raphi@bypit.de>',
+    author: 'Raphael Touet <raphraph@raphraph.de>',
     vars: {
         message: {
             title: 'Announcing message',
