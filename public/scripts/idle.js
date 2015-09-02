@@ -81,15 +81,15 @@ registerPlugin({
     
     var sendIdleMessage = config.sendIdleMessage;
     if(typeof sendIdleMessage != 'number'){
-        sendIdleMessage = parseInt(sendIdleMessage);
+        sendIdleMessage = parseInt(sendIdleMessage, 10);
     }
     var ignoreIfOutputIsntMuted = config.ignoreIfOutputIsntMuted;
     if(typeof ignoreIfOutputIsntMuted != 'number'){
-        ignoreIfOutputIsntMuted = parseInt(ignoreIfOutputIsntMuted);
+        ignoreIfOutputIsntMuted = parseInt(ignoreIfOutputIsntMuted, 10);
     }
     
     var counter = 0;
-    var idleChannel = parseInt(config.idleChannel);
+    var idleChannel = parseInt(config.idleChannel, 10);
     var exemptChannels = [];
     
     var whitelist = {};
