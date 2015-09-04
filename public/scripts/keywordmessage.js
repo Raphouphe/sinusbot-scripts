@@ -24,32 +24,32 @@
 
 registerPlugin({
     name: 'Keyword Message',
-    version: '2.1',
+    version: '3.0',
     description: 'This script will response to some defined keywords. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
     author: 'Am4n <am4n.ar@gmail.com>, Raphael Touet <raphraph@raphraph.de>',
     vars: {
-        cs:{
+        combinations:{
             title: 'Keyword/Command/Regex: Output',
             type: 'multiline'
         },
-        fs: {
-            title: 'Respond on server-chat. (default: no)',
+        use_server_chat: {
+            title: 'Respond on server-chat',
             type: 'select',
             options: [
                 'No',
                 'Yes'
             ]
         },
-        fc: {
-            title: 'Respond on channel-chat. (default: no)',
+        use_channel_chat: {
+            title: 'Respond on channel-chat',
             type: 'select',
             options: [
                 'No',
                 'Yes'
             ]
         },
-        fp: {
-            title: 'Respond on private-chat. (default: yes)',
+        use_private_chat: {
+            title: 'Respond on private-chat',
             type: 'select',
             options: [
                 'No',
@@ -57,111 +57,143 @@ registerPlugin({
             ]
         }
     }
-}, function (sinusbot, config) {
-    log("");
+}, function(sinusbot, config){
+    // -- Load messages --
+    log('');
+    log('[Keyword Msg] Loading...');
     
-    if(!config.cs) {log("[Keyword Msg] Please define at least one combination."); return;}
-    if(!config.fs) {log("[Keyword Msg] You did not select if the bot should respond on messages from the server-chat. Default (: no) is used.");config.fs=0;}
-    if(!config.fc) {log("[Keyword Msg] You did not select if the bot should respond on messages from the channel-chat. Default (: no) is used.");config.fc=0;}
-    if(!config.fp) {log("[Keyword Msg] You did not select if the bot should respond on messages from the private-chat. Default (: yes) is used.");config.fp=1;}
- 
-    var fs = config.fs, fc = config.fc, fp = config.fp, sf = getBotId();
-    if(fs == 0 && fc == 0 && fp == 0){log("[Keyword Msg] Script disabled. No input-chat defined.");return;}
- 
-    var cTR = function(s) {
-        s = s.substr(1);
-        var arr = s.split("/");
+    // -- Prefix + log function which adds the prefix to the front --
+    var prefix = '[Keyword Msg] ', nLog = function(msg){
+        log(prefix + msg);
+    };
+    
+    // -- Checking configuration --
+    if(typeof config.combinations == 'undefined') {nLog('You have to define at least one combination!'); return;}
+    if(typeof config.use_server_chat == 'undefined') {config.use_server_chat = 0;}
+    if(typeof config.use_channel_chat == 'undefined') {config.use_channel_chat = 0;}
+    if(typeof config.use_private_chat == 'undefined') {config.use_private_chat = 1;}
+    
+    // -- Checking if an input-chat is selected --
+    if(config.use_channel_chat == 0 && config.use_server_chat == 0 && config.use_private_chat == 0){
+        nLog('Disabled script. You have to select an input-chat.');
+        return;
+    }
+    
+    // -- Information about which input-chat has been chosen --
+    log("");
+    nLog('The bot is now responding on messages from:');
+    if (config.use_server_chat == 1) nLog("- server chat");
+    if (config.use_channel_chat == 1) nLog("- channel chat");
+    if (config.use_private_chat == 1) nLog("- private chat");
+    
+    // -- Recreating "startsWith()" function which isn't included in ECMAScript 5 --
+    if (!String.prototype.startsWith) {
+        String.prototype.startsWith = function(searchString, position) {
+            position = position || 0;
+            return this.indexOf(searchString, position) === position;
+        };  
+    }
+    
+    // -- Function to convert a string to a regular expression --
+    var convertToRegex = function(string) {
+        string = string.substr(1);
+        var arr = string.split("/");
         return new RegExp(arr[0],arr[1]);
     };
     
-    var fls = [], t, k, o, cs = config.cs.split('\n').map(function(e) { 
-        if(e.match(/.{3,}:.{3,}/)){
-            k = e.split(':')[0].trim();
-            if(k.match(/^\/.*\/.*$/) != null){
-                t = "regex";
-                k = cTR(k);
-            } else if(k.match(/\..{1,}/i)){
-                t = "command";
-                k = k.toLowerCase();
+    // -- Converting multiline combinations setting into an array of objects --
+    var failed = [], type, key, output, e, cs = config.combinations.split('\n');
+    var combinations = [];
+    for(var i = 0; i<cs.length; i++){
+        e = cs[i];
+        if(e.match(/^.{3,}:.{3,}$/)){
+            key = e.split(':')[0].trim();
+            output = e.split(":");
+            output = output.slice(1,output.length).join(":").trim();
+            if(key.match(/^\/.*\/.*$/) != null){
+                type = "regex";
+                key = convertToRegex(key);
+            } else if(key.match(/\..{1,}/i) != null){
+                type = "command";
+                key = key.toLowerCase();
             } else {
-                if(k.startsWith("\\")){
-                    k = k.substr(0);
-                }
-                t = "string";
-                k = k.toLowerCase();
+                type = "string";
+                key = key.toLowerCase();
             }
-            o = e.split(":")[1].trim();
-            
-            return {k: k, o: o, t: t};
+            combinations.push({key: key, output: output, type: type});
         } else {
-            fls.push(e);
+            failed.push(e);
         }
-        return null;
-    });
+    }
     
-    if(fls.length != 0){
-        log("[Keyword Msg] Found some invalid cs: ");
-        fls.forEach(function(e){
+    // -- Information about which combination isn't valid --
+    if(failed.length != 0){
+        log("");
+        nLog("Found some invalid cs: ");
+        failed.forEach(function(e){
             log("- "+e);
         });
+        nLog("A combination is build like this: 'keyword : output'. The keyword can either be a regular expression, one or more words, or a command (starting with a dot). Each the keyword and the ouput has to be at least 3 characters long!");
         log("");
-        log("[Keyword Msg] A combination is build like this: 'keyword : output'. The keyword can either be a regular expression, one or more words, or a command (starting with a dot). Each the keyword and the ouput has to be at least 3 characters long!");
     }
     
-    for(var i = 0; i<cs.length; i++){
-        if(cs[i] == null | cs[i] == 'undefined'){
-            cs.splice(i, 1);
-        }
-    }
- 
-    var o, c, cM = function(me, mo, id, ni){
-        for(var i = 0; i<cs.length; i++){
-            c = cs[i];
-            if(c.t === "regex"){
-                if(me.match(c.k) == null || me.match(c.k) == 'undefined'){
-                    log("c");
+    // -- Function to check if the bot has to reply to the given message --
+    var output, combi, checkMessage = function(message, mode, id, nick) {
+        for(var i = 0; i<combinations.length; i++){
+            combi = combinations[i];
+            if(combi.type == 'regex'){
+                if(message.match(combi.key) == null || typeof message.match(combi.key) == 'undefined'){
                     continue;
                 }
-            } else if(c.t === "string"){
-                if(me.toLowerCase().indexOf(c.k) === -1){
+            } else if(combi.type == 'command'){
+                if(message.toLowerCase().startsWith(combi.key) == false){
                     continue;
                 }
-            } else if(c.t === "command"){
-                if(me.toLowerCase().startsWith(c.k) === false){
+            } else {
+                if(message.toLowerCase().indexOf(combi.key) == -1){
                     continue;
                 }
             }
-            o = c.o.replace("%n", ni);
-            if(mo === 1){
-                chatPrivate(id, o);
-            } else if(mo === 2){
-                chatChannel(o);
-            } else if(mo === 3){
-                chatServer(o);
+            output = combi.output.replace("%n", nick);
+            if(mode == 1){
+                chatPrivate(id, output);
+            } else if(mode == 2){
+                chatChannel(output);
+            } else {
+                chatServer(output);
             }
         }
     };
- 
+    
+    // -- Checks whenever a client sends a message --
+    var self;
     sinusbot.on('chat', function(ev) {
-        sf = getBotId();
-        if(ev.clientId === sf){
+        self = getBotId();
+        if(ev.clientId == self){
             return;
         }
-
-        if(ev.mode === 1 && fp === 0){
-            return;
-        } else if(ev.mode === 2 && fc === 0) {
-            return;
-        } else if(ev.mode === 3 && fs === 0){
-            return;
+        
+        log('not bot');
+        
+        switch (ev.mode) {
+            case 1:
+                if(config.use_private_chat == 0) return;
+                break;
+            case 2:
+                if(config.use_channel_chat == 0) return;
+                break;
+            case 3:
+                if(config.use_server_chat == 0) return;
+                break;
         }
+        
+        log('passed');
 
-        cM(ev.msg, ev.mode, ev.clientId, ev.clientNick);
+        checkMessage(ev.msg, ev.mode, ev.clientId, ev.clientNick);
 
     });
     
-    log('[Keyword Msg] Initialized Script.');
+    // -- Information --
+    nLog('Initialized Script.');
     log('');
 });
-
-
