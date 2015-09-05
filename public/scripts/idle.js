@@ -191,6 +191,20 @@ registerPlugin({
         }
         log('Exempted channels: ' + exemptChannels.toString());
     };
+    
+    var self = getBotId();
+    sinusbot.on('chat', function(ev) {
+        if(ev.clientId == self) return;
+        if(ev.mode != 1) return;
+        
+        switch (ev.msg.trim().split(' ')[0].trim()) {
+            case '!afk':
+                move(ev.clientId, idleChannel);
+                break;
+        }
+        
+    });
+    
     updateChannels();
     sinusbot.on('connect', updateChannels);
     
