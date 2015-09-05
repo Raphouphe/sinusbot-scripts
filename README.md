@@ -72,7 +72,7 @@ Tested with version: --
 <h4>Bad Channel Names (badchan.js)</h4>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will remove all channels matching some userdefined names.
-Tested with version: SinusBot v0.9.9-6fb4fe2
+Tested with version: SinusBot v0.9.9-a4f6453
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
@@ -105,7 +105,7 @@ Tested with version: --
 <h4>Join-Greeting (greetonjoin.js)</h4>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de)<br />
 Description: This script will let the bot greet everyone who joins the channel.
-Tested with version: --
+Tested with version: SinusBot v0.9.9-a4f6453
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
