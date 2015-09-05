@@ -22,7 +22,7 @@
  */
 registerPlugin({
     name: 'Join-Greeting',
-    version: '2.0',
+    version: '2.1',
     description: 'This script will let the bot greet everyone who joins the channel.',
     author: 'Raphael Touet <raphraph@raphraph.de>',
     vars: {
@@ -47,32 +47,41 @@ registerPlugin({
             placeholder: 'f.e. en'
         }
     }
-}, function(sinusbot, config){
-    log("[J-Greet] Join-Greeting v2.0 by Raphael Touet");
+}, function(sinusbot, config, info){
+    // -- Load messages --
+    log('');
+    log('Loading...');
+    log('');
+    var author = info.author.split(',');
+    if(author.length == 1){
+        author = author[0];
+        author = author.replace(/<.*>/gi, '').trim();
+    } else {
+        author = author.map(function(e){
+            return e.replace(/<.*>/gi, '').trim();
+        });
+        author = author.join(' & ');
+    }
+    log(info.name + ' v' + info.version + ' by ' + author + ' for SinusBot v0.9.9-a4f6453 (and above)');
     
-    if(!config.message) {log('[J-Greet] Invalid message');return;}
-    if(!config.type) {log('[J-Greet] Invalid type');return;}
+    if(typeof config.message == 'undefined') {log('Invalid message');return;}
+    if(typeof config.type == 'undefined') {log('Invalid type');return;}
     
     var type = config.type;
-    if(typeof type != 'number'){
-        type = parseInt(config.type, 10);
-    }
     
     if(type == 3){
-        if(!config.locale) {log('[J-Greet] Invalid locale');return;}
-        if(!config.locale.match(/^utf-8$|^[a-z]{2}(?:-[a-z]{2})?$/i)) {log('[J-Greet] Invalid locale');return;}
+        if(!config.locale) {log('Invalid locale');return;}
+        if(!config.locale.match(/^utf-8$|^[a-z]{2}(?:-[a-z]{2})?$/i)) {log('Invalid locale');return;}
     }
     
     
     sinusbot.on('clientJoin', function(ev){        
         var msg = config.message;
         msg = msg.replace(/%n/g, ev.clientNick);
-        if(type != 3){
-            msg = msg.replace(/(?:[url=.{1,}])?((https?:\/\/(?:www\.)?[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,63})([\/?\#](?:.){0,})?)(?:[/url])?/gi, '[url=$1]$1[/url]');
-        } else {
+        if(type == 3){
             msg = msg.replace(/\[.\](.{0,})\[\/.\]/i, '$1');
             msg = msg.replace(/<.>(.{0,})<\/.>/i, '$1');
-        }
+        } 
        
         if(type == 0){
             chatPrivate(ev.clientId, msg);
@@ -87,5 +96,7 @@ registerPlugin({
        
     });
     
-    log('[J-Greet] Initialized script.');
+    // -- Information --
+    log('Loaded !');
+    log('');
 });
