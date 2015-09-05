@@ -23,7 +23,7 @@
  */
 registerPlugin({
     name: 'No Recording!',
-    version: '2.0',
+    version: '2.1',
     description: 'This script will kick anyone who attempts to record.',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphraph@raphraph.de>',
     vars: {
@@ -45,13 +45,27 @@ registerPlugin({
             ]
         }
     }
-}, function(sinusbot, config) {
-    if(!config.kickMessage) {log('[No Rec.] Invalid kick message');return;}
-    if(!config.whitelistOrBlacklist) {config.whitelistOrBlacklist = 0}
-    if(!config.exemptChannels) {config.exemptChannels = ""}
+}, function(sinusbot, config, info) {
+    // -- Load messages --
+    log('');
+    log('Loading...');
+    log('');
+    var author = info.author.split(',');
+    if(author.length == 1){
+        author = author[0];
+        author = author.replace(/<.*>/gi, '').trim();
+    } else {
+        author = author.map(function(e){
+            return e.replace(/<.*>/gi, '').trim();
+        });
+        author = author.join(' & ');
+    }
+    log(info.name + ' v' + info.version + ' by ' + author + ' for SinusBot v0.9.9-a4f6453 (and above)');
+    
+    if(typeof config.whitelistOrBlacklist == 'undefined') {config.whitelistOrBlacklist = 0}
+    if(typeof config.exemptChannels == 'undefined') {config.exemptChannels = ""}
     
     var whitelistOrBlacklist = config.whitelistOrBlacklist;
-    if(typeof whitelistOrBlacklist != 'number') whitelistOrBlacklist = parseInt(whitelistOrBlacklist);
     
     var exemptedChannelNames = config.exemptChannels.split('\n').map(function(e) { 
         var ex = e.trim().replace(/\r/g, '');
@@ -78,7 +92,7 @@ registerPlugin({
     });
     
     var updateChannels = function() {
-        log('[No Rec.] Connected, getting channels');
+        log('Connected, getting channels');
         var channels = getChannels(), ex;
         var channel_names = channels.map(function(e) { return e.name });
         for(var i = 0; i < exemptedChannelNames.length; i++){
@@ -94,11 +108,14 @@ registerPlugin({
                 }
             }
         }
-        log('[No Rec.] Exempted channels: ' + exemptChannels.toString());
+        log('Exempted channels: ' + exemptChannels.toString());
     };
     
     updateChannels();
     sinusbot.on('connect', updateChannels);
-    log('[No Rec.] Initialized script.');
+    
+    // -- Information --
+    log('Loaded !');
+    log('');
 });
 
