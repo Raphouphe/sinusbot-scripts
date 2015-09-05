@@ -24,7 +24,7 @@
 
 registerPlugin({
     name: 'Keyword Message',
-    version: '3.0',
+    version: '3.1',
     description: 'This script will response to some defined keywords. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
     author: 'Am4n <am4n.ar@gmail.com>, Raphael Touet <raphraph@raphraph.de>',
     vars: {
@@ -57,34 +57,42 @@ registerPlugin({
             ]
         }
     }
-}, function(sinusbot, config){
+}, function(sinusbot, config, info){
     // -- Load messages --
     log('');
-    log('[Keyword Msg] Loading...');
-    
-    // -- Prefix + log function which adds the prefix to the front --
-    var prefix = '[Keyword Msg] ', nLog = function(msg){
-        log(prefix + msg);
-    };
+    log('Loading...');
+    log('');
+    var author = info.author.split(',');
+    if(author.length == 1){
+        author = author[0];
+        author = author.replace(/<.*>/gi, '').trim();
+    } else {
+        author = author.map(function(e){
+            return e.replace(/<.*>/gi, '').trim();
+        });
+        author = author.join(' & ');
+    }
+    log(info.name + ' v' + info.version + ' by ' + author);
     
     // -- Checking configuration --
-    if(typeof config.combinations == 'undefined') {nLog('You have to define at least one combination!'); return;}
+    if(typeof config.combinations == 'undefined') {log('You have to define at least one combination!'); log(''); return;}
     if(typeof config.use_server_chat == 'undefined') {config.use_server_chat = 0;}
     if(typeof config.use_channel_chat == 'undefined') {config.use_channel_chat = 0;}
     if(typeof config.use_private_chat == 'undefined') {config.use_private_chat = 1;}
     
     // -- Checking if an input-chat is selected --
     if(config.use_channel_chat == 0 && config.use_server_chat == 0 && config.use_private_chat == 0){
-        nLog('Disabled script. You have to select an input-chat.');
+        log('Disabled script. You have to select an input-chat.');
+        log('');
         return;
     }
     
     // -- Information about which input-chat has been chosen --
     log("");
-    nLog('The bot is now responding on messages from:');
-    if (config.use_server_chat == 1) nLog("- server chat");
-    if (config.use_channel_chat == 1) nLog("- channel chat");
-    if (config.use_private_chat == 1) nLog("- private chat");
+    log('The bot is now responding on messages from:');
+    if (config.use_server_chat == 1) log("- server chat");
+    if (config.use_channel_chat == 1) log("- channel chat");
+    if (config.use_private_chat == 1) log("- private chat");
     
     // -- Recreating "startsWith()" function which isn't included in ECMAScript 5 --
     if (!String.prototype.startsWith) {
@@ -129,11 +137,11 @@ registerPlugin({
     // -- Information about which combination isn't valid --
     if(failed.length != 0){
         log("");
-        nLog("Found some invalid cs: ");
+        log("Found some invalid cs: ");
         failed.forEach(function(e){
             log("- "+e);
         });
-        nLog("A combination is build like this: 'keyword : output'. The keyword can either be a regular expression, one or more words, or a command (starting with a dot). Each the keyword and the ouput has to be at least 3 characters long!");
+        log("A combination is build like this: 'keyword : output'. The keyword can either be a regular expression, one or more words, or a command (starting with a dot). Each the keyword and the ouput has to be at least 3 characters long!");
         log("");
     }
     
@@ -167,13 +175,11 @@ registerPlugin({
     
     // -- Checks whenever a client sends a message --
     var self;
-    sinusbot.on('chat', function(ev) {
+    sinusbot.on('chat', function(ev) {        
         self = getBotId();
         if(ev.clientId == self){
             return;
         }
-        
-        log('not bot');
         
         switch (ev.mode) {
             case 1:
@@ -186,14 +192,12 @@ registerPlugin({
                 if(config.use_server_chat == 0) return;
                 break;
         }
-        
-        log('passed');
 
         checkMessage(ev.msg, ev.mode, ev.clientId, ev.clientNick);
 
     });
     
     // -- Information --
-    nLog('Initialized Script.');
+    log('Loaded !');
     log('');
 });

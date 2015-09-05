@@ -129,7 +129,7 @@ Tested with version: --
 <h4>Keyword Message (keywordmessage.js)</h4>
 Author: <a href="https://forum.sinusbot.com/members/am4n.18/">Am4n</a> (am4n.ar@gmail.com) & <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de)<br />
 Description: This script will response to some defined keywords.
-Tested with version: SinusBot v0.9.9-6fb4fe2
+Tested with version: SinusBot v0.9.9-a4f6453
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
