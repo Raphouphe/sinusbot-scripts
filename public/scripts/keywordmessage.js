@@ -72,7 +72,7 @@ registerPlugin({
         });
         author = author.join(' & ');
     }
-    log(info.name + ' v' + info.version + ' by ' + author);
+    log(info.name + ' v' + info.version + ' by ' + author + ' for SinusBot v0.9.9-a4f6453 (and above)');
     
     // -- Checking configuration --
     if(typeof config.combinations == 'undefined') {log('You have to define at least one combination!'); log(''); return;}
