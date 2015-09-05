@@ -24,7 +24,7 @@
 
 registerPlugin({
     name: 'Idle Mover',
-    version: '3.1',
+    version: '3.2',
     description: 'This script will move all idling clients to a defined channel. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphraph@raphraph.de>',
     vars: {
@@ -191,6 +191,20 @@ registerPlugin({
         }
         log('Exempted channels: ' + exemptChannels.toString());
     };
+    
+    var self = getBotId();
+    sinusbot.on('chat', function(ev) {
+        if(ev.clientId == self) return;
+        if(ev.mode != 1) return;
+        
+        switch (ev.msg.trim().split(' ')[0].trim()) {
+            case '!afk':
+                move(ev.clientId, idleChannel);
+                break;
+        }
+        
+    });
+    
     updateChannels();
     sinusbot.on('connect', updateChannels);
     
