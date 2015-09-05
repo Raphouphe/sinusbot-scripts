@@ -37,10 +37,26 @@ registerPlugin({
             type: 'string'
         }
     }
-}, function(sinusbot, config) {
-    if (!config.names) {log('[BCN] Invalid channel names'); return;}
+}, function(sinusbot, config, info) {
+    // -- Load messages --
+    log('');
+    log('Loading...');
+    log('');
+    var author = info.author.split(',');
+    if(author.length == 1){
+        author = author[0];
+        author = author.replace(/<.*>/gi, '').trim();
+    } else {
+        author = author.map(function(e){
+            return e.replace(/<.*>/gi, '').trim();
+        });
+        author = author.join(' & ');
+    }
+    log(info.name + ' v' + info.version + ' by ' + author + ' for SinusBot v0.9.9-a4f6453 (and above)');
+    
+    if (typeof config.names == 'undefined') {log('Invalid channel names'); return;}
     var ignoredChannels = [];
-    if (config.ignoredChannels){
+    if (typeof config.ignoredChannels != 'undefined'){
         ignoredChannels = config.ignoredChannels.split('\n').map(function(e) { 
             var n = parseInt(e.trim().replace(/\r/g, ''));
             if(!n){
@@ -67,13 +83,13 @@ registerPlugin({
             if (expression.match(/^\/.*\/.*$/)){
                 reg = convertToRegex(names[i]);
                 if(ev.name.match(reg)){
-                    log('[BCN] Deleting channel ' + ev.name);
+                    log('Deleting channel ' + ev.name);
                     channelDelete(ev.id, true);
                     return;
                 }
             } else {
                 if (ev.name.toLowerCase().indexOf(expression.toLowerCase()) >= 0) {
-                    log('[BCN] Deleting channel ' + ev.name);
+                    log('Deleting channel ' + ev.name);
                     channelDelete(ev.id, true);
                     return;
                 }
@@ -103,12 +119,15 @@ registerPlugin({
                 }
             }
         }
-        if(removed.length > 0) log('[BCN] Removed following channels: ' + removed.toString());
+        if(removed.length > 0) log('Removed following channels: ' + removed.toString());
     };
     
     updateChannels();
     sinusbot.on('connect', updateChannels);
-    log('[BCN] Initialized Script.');
+    
+    // -- Information --
+    log('Loaded !');
+    log('');
     
 });
 
