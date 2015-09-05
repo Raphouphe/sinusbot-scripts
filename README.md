@@ -34,7 +34,7 @@ Then you just have to restart your bot, and they will appear in sour `Scripts` s
 <h4>Idle Mover (idle.js)</h4>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will move all idling clients to a defined channel.
-Tested with version: --
+Tested with version: SinusBot v0.9.9-a4f6453
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
@@ -47,6 +47,7 @@ Tested with version: --
 <tr><td>Idle message</td><td>The message which is sent to the clients which are idling, if 'Send idle message' is set to 'Send'.</td><td>A valid message. Supports BBCode. Experimental: should automatically convert links to BBCode.</td></tr>
 <tr><td>Checks per minute</td><td>How many times per minute, the bot will check if some clients are idling.</td><td>A valid number lower or equal to 30.</td></tr>
 <tr><td>Speakers not disabled</td><td>Whether to ignore or not, clients whose speakers aren't disabled.</td><td><em>Just select one of the given options.</em></td></tr>
+<tr><td>Log checks into console</td><td>Whether to log each time the script is checking for idling clients or not.</td><td><em>Just select one of the given options.</em></td></tr>
 </table>
 <br />
 

@@ -31,7 +31,7 @@ registerPlugin({
         idleTime: {
             title: 'Idle time',
             type: 'number',
-            placeholder: '600'
+            placeholder: 600
         },
         idleChannel: {
             title: 'Idle channel',
@@ -66,27 +66,45 @@ registerPlugin({
                 'Ignore Client',
                 'Don\'t Ignore Client'
             ]
+        },
+        logCheck: {
+            title: 'Log checks into console',
+            type: 'select',
+            options: [
+                'No',
+                'Yes'
+            ]
         }
     }
-}, function(sinusbot, config) {
-    if (!config.idleTime) {log('[Idle Mover] Invalid idle time'); return;}
-    if (!config.idleChannel) {log('[Idle Mover] Invalid idle channel name'); return;}
-    if (!config.exemptChannel) {config.exemptChannel = "";}
-    if (!config.sendIdleMessage) {log('[Idle Mover] Not selected: send idle message'); return;}
-    if (!config.idleMessage) {log('[Idle Mover] Invalid idle message'); return;}
-    if (!config.checksPerMinute) {log('[Idle Mover] Invalid amount of checks per minute'); return;}
-    if (!config.ignoreIfOutputIsntMuted) {log('[Idle Mover] Not selected: ignoring client if speakers aren\'t disabled'); return;}
+}, function(sinusbot, config, info) {
+    // -- Load messages --
+    log('');
+    log('Loading...');
+    log('');
+    var author = info.author.split(',');
+    if(author.length == 1){
+        author = author[0];
+        author = author.replace(/<.*>/gi, '').trim();
+    } else {
+        author = author.map(function(e){
+            return e.replace(/<.*>/gi, '').trim();
+        });
+        author = author.join(' & ');
+    }
+    log(info.name + ' v' + info.version + ' by ' + author + ' for SinusBot v0.9.9-a4f6453 (and above)');
+    
+    if (typeof config.idleTime == 'undefined') {log('Invalid idle time'); return;}
+    if (typeof config.idleChannel == 'undefined' || config.idleChannel == '') {log('Invalid idle channel name'); return;}
+    if (typeof config.exemptChannel == 'undefined') {config.exemptChannel = "";}
+    if (typeof config.sendIdleMessage == 'undefined') {log('Not selected: send idle message'); return;}
+    if (typeof config.idleMessage == 'undefined' || config.idleMessage == '') {log('Invalid idle message'); return;}
+    if (typeof config.checksPerMinute == 'undefined') {log('Invalid amount of checks per minute'); return;}
+    if (typeof config.ignoreIfOutputIsntMuted == 'undefined') {log('Not selected: ignoring client if speakers aren\'t disabled'); return;}
+    if (typeof config.logCheck == 'undefined') {config.logCheck = 0;}
     
     var exemptNames = config.exemptChannel.split('\n').map(function(e) { return e.trim().replace(/\r/g, ''); });
     
-    var sendIdleMessage = config.sendIdleMessage;
-    if(typeof sendIdleMessage != 'number'){
-        sendIdleMessage = parseInt(sendIdleMessage, 10);
-    }
-    var ignoreIfOutputIsntMuted = config.ignoreIfOutputIsntMuted;
-    if(typeof ignoreIfOutputIsntMuted != 'number'){
-        ignoreIfOutputIsntMuted = parseInt(ignoreIfOutputIsntMuted, 10);
-    }
+    var sendIdleMessage = config.sendIdleMessage, ignoreIfOutputIsntMuted = config.ignoreIfOutputIsntMuted;
     
     var counter = 0;
     var idleChannel = parseInt(config.idleChannel, 10);
@@ -95,11 +113,11 @@ registerPlugin({
     var whitelist = {};
     
     if (config.idleTime < 150) {
-        log('[Idle Mover] Idle time must be at least 150 seconds.');
+        log('Idle time must be at least 150 seconds.');
         return;
     } 
     if (config.checksPerMinute > 30) {
-        log('[Idle Mover] The bot won\'t check if the clients are idling more than 30 times a minute...');
+        log('The bot won\'t check if the clients are idling more than 30 times a minute...');
         return;
     }
 
@@ -115,7 +133,7 @@ registerPlugin({
             }
         }
         if ((counter % (60/config.checksPerMinute)) == 0) {
-            log('[Idle Mover] Idle check');
+            if(config.logCheck == 1) log('Checking...');
             // Idle-check once in 60 seconds
             var channel, client;
             var channels = getChannels();
@@ -156,11 +174,11 @@ registerPlugin({
     });
         
     var updateChannels = function() {
-        log('[Idle Mover] Connected, getting channels');
+        log('Connected, getting channels');
         var channels = getChannels();
         for(var i = 0; i<channels.length; i++){
             if(channels[i].id == idleChannel) {
-                log('[Idle Mover] Idle-Channel will be ' + channels[i].name);
+                log('Idle-Channel will be ' + channels[i].name);
             }
         }
         for(var i = 0; i < exemptNames.length; i++){
@@ -171,12 +189,14 @@ registerPlugin({
                 }
             }
         }
-        log('[Idle Mover] Exempted channels: ' + exemptChannels.toString());
+        log('Exempted channels: ' + exemptChannels.toString());
     };
     updateChannels();
     sinusbot.on('connect', updateChannels);
-
-    log('[Idle Mover] Initialized script.');
+    
+    // -- Information --
+    log('Loaded !');
+    log('');
 });
 
 
