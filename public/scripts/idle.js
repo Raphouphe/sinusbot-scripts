@@ -24,7 +24,7 @@
 
 registerPlugin({
     name: 'Idle Mover',
-    version: '3.0',
+    version: '3.1',
     description: 'This script will move all idling clients to a defined channel. (Help: https://github.com/Raphouphe/sinusbot-scripts)',
     author: 'Michael Friese <michael@sinusbot.com>, Raphael Touet <raphraph@raphraph.de>',
     vars: {
