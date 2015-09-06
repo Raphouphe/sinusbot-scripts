@@ -121,9 +121,7 @@ Tested with version: SinusBot v0.9.9-a4f6453
 <h4>No Recording (norecording.js)</h4>
 </blockquote>
 <hr />
-<blockquote><h5>Settings</h5></blockquote>
-<table>
-<tr><th>Setting</th><th>Description</th><th>Values</th></tr>
+<em>Documentation follows with a new version of this script...</em>
 </table>
 
 <blockquote>
