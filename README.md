@@ -34,7 +34,7 @@ Then you just have to restart your bot, and they will appear in sour `Scripts` s
 <h4>Idle Mover (idle.js)</h4>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will move all idling clients to a defined channel.
-Tested with version: SinusBot v0.9.9-a4f6453
+Tested with version: SinusBot v0.9.9-50e8ba1
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>

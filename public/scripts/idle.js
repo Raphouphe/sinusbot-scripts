@@ -95,7 +95,7 @@ registerPlugin({
         });
         author = author.join(' & ');
     }
-    log(info.name + ' v' + info.version + ' by ' + author + ' for SinusBot v0.9.9-a4f6453 (and above)');
+    log(info.name + ' v' + info.version + ' by ' + author + ' for SinusBot v0.9.9-50e8ba1 (and above)');
     
     if (typeof config.idleTime == 'undefined') {log('Invalid idle time'); return;}
     if (typeof config.idleChannel == 'undefined' || config.idleChannel == '') {log('Invalid idle channel name'); return;}
