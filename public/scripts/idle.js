@@ -41,6 +41,10 @@ registerPlugin({
             title: 'Exempted channels',
             type: 'multiline'
         },
+        exemptGroups: {
+            title: 'Exempted groups',
+            type: 'multiline'
+        },
         sendIdleMessage: {
             title: 'Send idle message',
             type: 'select',
@@ -96,6 +100,7 @@ registerPlugin({
     if (typeof config.idleTime == 'undefined') {log('Invalid idle time'); return;}
     if (typeof config.idleChannel == 'undefined' || config.idleChannel == '') {log('Invalid idle channel name'); return;}
     if (typeof config.exemptChannel == 'undefined') {config.exemptChannel = "";}
+    if (typeof config.exemptGroups == 'undefined') {config.exemptGroups = "";}
     if (typeof config.sendIdleMessage == 'undefined') {log('Not selected: send idle message'); return;}
     if (typeof config.idleMessage == 'undefined' || config.idleMessage == '') {log('Invalid idle message'); return;}
     if (typeof config.checksPerMinute == 'undefined') {log('Invalid amount of checks per minute'); return;}
@@ -103,6 +108,14 @@ registerPlugin({
     if (typeof config.logCheck == 'undefined') {config.logCheck = 0;}
     
     var exemptNames = config.exemptChannel.split('\n').map(function(e) { return e.trim().replace(/\r/g, ''); });
+    var exemptGroups = config.exemptGroups.split('\n').map(function(e) {
+        var numb = parseInt(e.trim().replace(/\r/g, ''));
+        if(isNaN(numb)) {
+            return e.trim().replace(/\r/g, '');
+        } else {
+            return numb;
+        }
+    });
     
     var sendIdleMessage = config.sendIdleMessage, ignoreIfOutputIsntMuted = config.ignoreIfOutputIsntMuted;
     
@@ -146,6 +159,17 @@ registerPlugin({
                 for (var j = 0; j < channel.clients.length; j++) {
                     client = channel.clients[j];
                     if (client.id == self) continue;
+                    if (client.g.length != 0) {
+                        var iii = client.g.length;
+                        var cont = false;
+                        while (iii--) {
+                            if (exemptGroups.indexOf(client.g.i) >= 0 || exemptGroups.indexOf(client.g.n) >= 0) {
+                                cont = true;
+                                break;
+                            }
+                        }
+                        if (cont) continue;
+                    }
                     if (whitelist[client.id]) continue;
                     if (client.away && client.idle > config.idleTime * 500){
                         log('Client ' + client.nick + ' is idling, moving');

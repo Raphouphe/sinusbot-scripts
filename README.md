@@ -43,6 +43,7 @@ Tested with version: SinusBot v0.9.9-a4f6453
 <tr><td>Idle time</td><td>Time (in seconds) after which a client is labeled as idling.</td><td>A valid number bigger than 150</td></tr>
 <tr><td>Idle channel</td><td>The channel where idling clients are moved to.</td><td>A valid channel name</td></tr>
 <tr><td>Exempted channels</td><td>Clients which are in some of these channels, will be ignored by the Bot.</td><td>Each line, one valid channel name.</td></tr>
+<tr><td>Exempted groups</td><td>Clients which are in some of these groups, will be ignored by the Bot.</td><td>Each line, one valid group name or group id.</td></tr>
 <tr><td>Send idle message</td><td>Whether to send an idling message or not.</td><td><em>Just select one of the given options.</em></td></tr>
 <tr><td>Idle message</td><td>The message which is sent to the clients which are idling, if 'Send idle message' is set to 'Send'.</td><td>A valid message. Supports BBCode. Experimental: should automatically convert links to BBCode.</td></tr>
 <tr><td>Checks per minute</td><td>How many times per minute, the bot will check if some clients are idling.</td><td>A valid number lower or equal to 30.</td></tr>
