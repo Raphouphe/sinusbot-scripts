@@ -22,7 +22,7 @@
  */
 registerPlugin({
     name: 'Join-Greeting',
-    version: '2.1',
+    version: '2.3',
     description: 'This script will let the bot greet everyone who joins the channel.',
     author: 'Raphael Touet <raphraph@raphraph.de>',
     vars: {
@@ -40,11 +40,6 @@ registerPlugin({
                 'Poke',
                 'Say'
             ]
-        },
-        locale: {
-            title: 'Locale (used if \'Message-Type\' is set to \'Say\')',
-            type: 'string',
-            placeholder: 'f.e. en'
         },
         reformat_nick: {
             title: 'Reformat nickname',
@@ -118,11 +113,6 @@ registerPlugin({
     
     var type = config.type;
     
-    if(type == 3){
-        if(!config.locale) {log('Invalid locale');return;}
-        if(!config.locale.match(/^utf-8$|^[a-z]{2}(?:-[a-z]{2})?$/i)) {log('Invalid locale');return;}
-    }
-    
     
     sinusbot.on('clientJoin', function(ev){        
         var msg = config.message;
@@ -149,7 +139,7 @@ registerPlugin({
         } else if(type == 2){
             poke(ev.clientId, msg);
         } else if(type == 3){
-            say(msg, config.locale);
+            say(msg);
         }
        
     });
