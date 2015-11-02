@@ -49,11 +49,11 @@ registerPlugin({
                 'Yes'
             ]
         },
-        reformat_string: {
+        /*reformat_string: {
             title: 'Reformat nickname - format',
             type: 'string',
             placeholder: '/^.* | .*$/i'
-        },
+        },*/
         reformat_info: {
             title: 'Reformat nickname - details',
             type: 'multiline'
