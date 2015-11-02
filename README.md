@@ -115,6 +115,9 @@ Tested with version: SinusBot v0.9.9-a4f6453
 <tr><th>Message</th><th>The message that should be displayed or sayed. If 'Message-Type' is set to anything except of 'Say', BBCodes are supported.</th><th>A message</th></tr>
 <tr><th>Message-Type</th><th>The way the client should be notified.</th><th><em>Just select one of the given options.</em></th></tr>
 <tr><th>Locale</th><th>The localse which is used if 'Message-Type' is set to 'Say'</th><th>A valid locale</th></tr>
+<tr><th>Reformat nickname</th><th>Enables or disables the reformating feature! DON'T ENABLE IT IF YOU DON'T KNOW HOW TO USE IT!</th><th>Just select one of the given options.</th></tr>
+<tr><th>Reformat nickname - format</th><th>??? - currently not in use</th><th>???</th></tr>
+<tr><th>Reformat nickname - details</th><th>Provides important details to the script.</th><th>First line: "split: |" for example. Second line: "pos: 1" for example.</th></tr>
 </table>
 <br />
 
