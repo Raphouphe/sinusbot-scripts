@@ -49,7 +49,7 @@ Tested with version: SinusBot v0.9.9-98d0cd5
 <tr><td>Debugging</td><td>Whether to enable debugging or not.</td><td><em>Just select one of the given options.</em></td></tr>
 <tr><td><del>Checks per minute</del></td><td><del>How many times per minute, the bot will check if some clients are idling.</del></td><td><del>A valid number lower or equal to 30.</del></td></tr>
 <tr><td><del>Speakers not disabled</del></td><td><del>Whether to ignore or not, clients whose speakers aren't disabled.</del></td><td><em><del>Just select one of the given options.</del></em></td></tr>
-<tr><td><del>Log checks into console</del></td><td>Whether to log each time the script is checking for idling clients or not.</del></td><td><em><del>Just select one of the given options.</del></em></td></tr>
+<tr><td><del>Log checks into console</del></td><td><del>Whether to log each time the script is checking for idling clients or not.</del></td><td><em><del>Just select one of the given options.</del></em></td></tr>
 </table>
 <br />
 
