@@ -57,7 +57,7 @@ Tested with version: SinusBot v0.9.9-98d0cd5
 <h4>Advertising (advertising.js)</h4>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will announce one of the configured lines every x seconds.
-Tested with version: --
+Tested with version: SinusBot v0.9.10-e1fdee3
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
