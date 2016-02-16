@@ -31,10 +31,10 @@ Then you just have to restart your bot, and they will appear in sour `Scripts` s
 #### Scripts
 
 <blockquote>
-<h4>Idle Mover (idle.js)</h4>
+<h4>Idle Mover 2 (idlemover.js)</h4>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will move all idling clients to a defined channel.
-Tested with version: SinusBot v0.9.9-50e8ba1
+Tested with version: SinusBot v0.9.9-98d0cd5
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
@@ -42,13 +42,14 @@ Tested with version: SinusBot v0.9.9-50e8ba1
 <tr><th>Setting</th><th>Description</th><th>Values</th></tr>
 <tr><td>Idle time</td><td>Time (in seconds) after which a client is labeled as idling.</td><td>A valid number bigger than 150</td></tr>
 <tr><td>Idle channel</td><td>The channel where idling clients are moved to.</td><td>A valid channel name</td></tr>
-<tr><td>Exempted channels</td><td>Clients which are in some of these channels, will be ignored by the Bot.</td><td>Each line, one valid channel name.</td></tr>
-<tr><td>Exempted groups</td><td>Clients which are in some of these groups, will be ignored by the Bot.</td><td>Each line, one valid group name or group id.</td></tr>
+<tr><td>Ignored channels</td><td>Clients which are in some of these channels, will be ignored by the Bot.</td><td>Each line, one valid channel name or id.</td></tr>
+<tr><td><del>Exempted groups</del></td><td><del>Clients which are in some of these groups, will be ignored by the Bot.</del></td><td><del>Each line, one valid group name or group id.</del></td></tr>
 <tr><td>Send idle message</td><td>Whether to send an idling message or not.</td><td><em>Just select one of the given options.</em></td></tr>
 <tr><td>Idle message</td><td>The message which is sent to the clients which are idling, if 'Send idle message' is set to 'Send'.</td><td>A valid message. Supports BBCode. Experimental: should automatically convert links to BBCode.</td></tr>
-<tr><td>Checks per minute</td><td>How many times per minute, the bot will check if some clients are idling.</td><td>A valid number lower or equal to 30.</td></tr>
-<tr><td>Speakers not disabled</td><td>Whether to ignore or not, clients whose speakers aren't disabled.</td><td><em>Just select one of the given options.</em></td></tr>
-<tr><td>Log checks into console</td><td>Whether to log each time the script is checking for idling clients or not.</td><td><em>Just select one of the given options.</em></td></tr>
+<tr><td>Debugging</td><td>Whether to enable debugging or not.</td><td><em>Just select one of the given options.</em></td></tr>
+<tr><td><del>Checks per minute</del></td><td><del>How many times per minute, the bot will check if some clients are idling.</del></td><td><del>A valid number lower or equal to 30.</del></td></tr>
+<tr><td><del>Speakers not disabled</del></td><td><del>Whether to ignore or not, clients whose speakers aren't disabled.</del></td><td><em><del>Just select one of the given options.</del></em></td></tr>
+<tr><td><del>Log checks into console</del></td><td><del>Whether to log each time the script is checking for idling clients or not.</del></td><td><em><del>Just select one of the given options.</del></em></td></tr>
 </table>
 <br />
 
@@ -56,7 +57,7 @@ Tested with version: SinusBot v0.9.9-50e8ba1
 <h4>Advertising (advertising.js)</h4>
 Author: <a href="https://github.com/Raphouphe">Raphraph</a> (raphraph@raphraph.de) & <a href="https://github.com/flyth">flyth</a><br />
 Description: This script will announce one of the configured lines every x seconds.
-Tested with version: --
+Tested with version: SinusBot v0.9.10-e1fdee3
 </blockquote>
 <hr />
 <blockquote><h5>Settings</h5></blockquote>
