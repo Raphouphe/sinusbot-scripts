@@ -147,7 +147,7 @@ registerPlugin({
             channel = channels[i];
             if(!channel.clients) continue;
             clients = channel.clients;
-            for (var j = 0; j < clients.lengtj; j++){
+            for (var j = 0; j < clients.length; j++){
                 client = clients[j];
                 if (client.id != id) continue;
                 return client;
